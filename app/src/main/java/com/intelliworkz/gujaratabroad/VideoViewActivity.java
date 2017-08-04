@@ -34,7 +34,7 @@ public class VideoViewActivity extends AppCompatActivity {
     UniversalVideoView vvVideo;
     UniversalMediaController media_controller;
     TextView txtVVTile;
-    String url=Common.SERVICE_URL;
+    String url=HomeActivity.SERVICE_URL;
     ImageView img_adTopVideo,img_adBottomVideo;
     RelativeLayout top,bottom,rlVideo;
     @Override

@@ -32,7 +32,7 @@ public class NewsActivity extends AppCompatActivity
     private ViewPager pager;
     ProgressDialog dialog;
 
-    String url="http://www.codeclinic.in/gujratabroad_webservice/";
+    String url=HomeActivity.SERVICE_URL;
     ArrayList<String> tabTitles=new ArrayList<>();
     public static ArrayList<String> tabTitlesId=new ArrayList<>();
     Pager adapter;

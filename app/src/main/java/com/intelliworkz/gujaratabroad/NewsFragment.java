@@ -50,7 +50,7 @@ public class NewsFragment extends Fragment{
     String status,message;
     ArrayList<NewsModel> newsArrayList=new ArrayList<>();
     ArrayList<HashMap<String,String>> adcenterList=new ArrayList<>();
-    String url=Common.SERVICE_URL;
+    String url=HomeActivity.SERVICE_URL;
 
     // newInstance constructor for creating fragment with arguments
     public static NewsFragment newInstance(int page, String title) {

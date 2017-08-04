@@ -32,7 +32,7 @@ public class NewsDetailActivity extends AppCompatActivity {
     TextView txtNDate,txtNTitle,txtNDesc;
     ArrayList<NewsModel> newsArrayList=new ArrayList<>();
     String message,NewsTitle,NewsDate,NewsDesc,NewsImg;
-    String url=Common.SERVICE_URL;
+    String url=HomeActivity.SERVICE_URL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

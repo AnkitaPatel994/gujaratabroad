@@ -45,7 +45,7 @@ public class VideoActivity extends AppCompatActivity
     ArrayList<HashMap<String,String>> videoListArray=new ArrayList<>();
     ArrayList<HashMap<String,String>> advideocenterList=new ArrayList<>();
     //ArrayList<HashMap<String,String>> advertiseList=new ArrayList<>();
-    String url=Common.SERVICE_URL;
+    String url=HomeActivity.SERVICE_URL;
     ProgressDialog dialog;
     String message,status;
 

@@ -34,7 +34,7 @@ public class AdvertiseActivity extends AppCompatActivity
     RecyclerView.LayoutManager rvAdvertiseManager;
     RecyclerView.Adapter rvAdvertiseAdapter;
     ArrayList<HashMap<String,String>> advertiseList=new ArrayList<>();
-    String url=Common.SERVICE_URL;
+    String url=HomeActivity.SERVICE_URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
