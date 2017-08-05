@@ -36,6 +36,7 @@ public class AdvertiseActivity extends AppCompatActivity
     ArrayList<HashMap<String,String>> advertiseList=new ArrayList<>();
     String url=HomeActivity.SERVICE_URL;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,7 +110,7 @@ public class AdvertiseActivity extends AppCompatActivity
             finish();
 
         }
-        else if (id == R.id.nav_share)
+       /* else if (id == R.id.nav_share)
         {
             Intent i=new Intent(Intent.ACTION_SEND);
             i.setType("text/plain");
@@ -119,10 +120,10 @@ public class AdvertiseActivity extends AppCompatActivity
             startActivity(Intent.createChooser(i,"Share using"));
             finish();
 
-        }
-        else if (id == R.id.nav_rate) {
+        }*/
+       /* else if (id == R.id.nav_rate) {
 
-        }
+        }*/
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -157,11 +158,11 @@ public class AdvertiseActivity extends AppCompatActivity
                         JSONObject j=Advertise.getJSONObject(i);
 
                         String addTitle=j.getString("add_title");
-                        String addImg=j.getString("add_img");
+                        String add_banner=j.getString("add_banner");
                         String addLink=j.getString("add_link");
 
                         cat.put("addTitle",addTitle);
-                        cat.put("addImg",url+"add_img/"+addImg);
+                        cat.put("add_banner",url+"add_img/"+add_banner);
                         cat.put("addLink",addLink);
 
                         advertiseList.add(cat);

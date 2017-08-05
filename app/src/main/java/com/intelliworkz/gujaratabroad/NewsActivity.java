@@ -115,7 +115,7 @@ public class NewsActivity extends AppCompatActivity
             finish();
 
         }
-        else if (id == R.id.nav_share)
+       /* else if (id == R.id.nav_share)
         {
             Intent i=new Intent(Intent.ACTION_SEND);
             i.setType("text/plain");
@@ -125,10 +125,10 @@ public class NewsActivity extends AppCompatActivity
             startActivity(Intent.createChooser(i,"Share using"));
             finish();
 
-        }
-        else if (id == R.id.nav_rate) {
+        }*/
+       /* else if (id == R.id.nav_rate) {
 
-        }
+        }*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

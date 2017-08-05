@@ -127,7 +127,7 @@ public class VideoActivity extends AppCompatActivity
             startActivity(i);
             finish();
         }
-        else if (id == R.id.nav_share)
+      /*  else if (id == R.id.nav_share)
         {
             Intent i=new Intent(Intent.ACTION_SEND);
             i.setType("text/plain");
@@ -137,10 +137,10 @@ public class VideoActivity extends AppCompatActivity
             startActivity(Intent.createChooser(i,"Share using"));
             finish();
 
-        }
-        else if (id == R.id.nav_rate) {
+        }*/
+       /* else if (id == R.id.nav_rate) {
 
-        }
+        }*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -246,7 +246,7 @@ public class VideoActivity extends AppCompatActivity
                         HashMap<String,String > cat = new HashMap<>();
                         JSONObject j=Advertise.getJSONObject(0);
 
-                        addImg=j.getString("add_img");
+                        addImg=j.getString("add_banner");
                         addLink=j.getString("add_link");
 
 
@@ -330,7 +330,7 @@ public class VideoActivity extends AppCompatActivity
                         HashMap<String,String > cat = new HashMap<>();
                         JSONObject j=Advertise.getJSONObject(i);
 
-                        addImg=j.getString("add_img");
+                        addImg=j.getString("add_banner");
                         addLink=j.getString("add_link");
 
                         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()

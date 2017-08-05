@@ -49,7 +49,7 @@ class AdvertiseAdapter extends RecyclerView.Adapter<AdvertiseAdapter.ViewHolder>
         holder.txtAdtitle.setText(adTitle);
 
 
-        final String urlImg = advertiseList.get(position).get("addImg");
+        final String urlImg = advertiseList.get(position).get("add_banner");
 
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                 .cacheOnDisc(true).cacheInMemory(true)
