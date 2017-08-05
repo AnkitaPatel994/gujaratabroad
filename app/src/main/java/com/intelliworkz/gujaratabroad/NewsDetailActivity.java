@@ -115,7 +115,7 @@ public class NewsDetailActivity extends AppCompatActivity {
                         HashMap<String,String > cat = new HashMap<>();
                         JSONObject j=Advertise.getJSONObject(0);
 
-                        addImg=j.getString("add_img");
+                        addImg=j.getString("add_banner");
                         addLink=j.getString("add_link");
 
                         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
@@ -208,7 +208,7 @@ public class NewsDetailActivity extends AppCompatActivity {
                     {
                         JSONObject j=Advertise.getJSONObject(i);
 
-                        addImg=j.getString("add_img");
+                        addImg=j.getString("add_banner");
                         addLink=j.getString("add_link");
 
                         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()

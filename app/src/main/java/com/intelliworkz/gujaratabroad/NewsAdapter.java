@@ -31,7 +31,7 @@ class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     Context context;
     ArrayList<NewsModel> newsArrayList;
     ArrayList<HashMap<String, String>> adcenterList;
-    String url="http://www.codeclinic.in/gujratabroad_webservice/";
+    String url=HomeActivity.SERVICE_URL;
     View v;
     int count=0;
 

@@ -6,4 +6,5 @@
     <color name="button_focused">#981937</color>
     <color name="button_pressed">#981937</color>
     <color name="colorFloating">#ea5568e2</color>
+    <color name="colorSubCatTab">#f3c42247</color>
 </resources>

@@ -5,25 +5,17 @@ package com.intelliworkz.gujaratabroad;
  */
 
 public class NewsModel {
-    String newsCatId;
+
     String newsTitle;
     String newsDetails;
     String newsImg;
     String newsDate;
-    public NewsModel(String newsCatId, String newsTitle, String newsDetails, String newsImg, String newsDate) {
-        this.newsCatId=newsCatId;
+    public NewsModel( String newsTitle, String newsDetails, String newsImg, String newsDate) {
+
         this.newsTitle=newsTitle;
         this.newsDetails=newsDetails;
         this.newsImg=newsImg;
         this.newsDate=newsDate;
-    }
-
-    public String getNewsCatId() {
-        return newsCatId;
-    }
-
-    public void setNewsCatId(String newsCatId) {
-        this.newsCatId = newsCatId;
     }
 
     public String getNewsTitle() {

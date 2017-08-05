@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
@@ -39,7 +42,6 @@ public class NewsFragment extends Fragment{
         // Required empty public constructor
     }
     View view;
-    //TextView tv;
     private String title;
     private int page;
 
@@ -51,6 +53,12 @@ public class NewsFragment extends Fragment{
     ArrayList<NewsModel> newsArrayList=new ArrayList<>();
     ArrayList<HashMap<String,String>> adcenterList=new ArrayList<>();
     String url=HomeActivity.SERVICE_URL;
+    private ViewPager SubCatpager;
+    private TabLayout subCattabLayout;
+    SubCatPager subAdapter;
+    public static ArrayList<String> tabTitlesSubCatId = new ArrayList<>();
+    ArrayList<String> tabTitlesSubCat = new ArrayList<>();
+    String arrPosition="0";
 
     // newInstance constructor for creating fragment with arguments
     public static NewsFragment newInstance(int page, String title) {
@@ -62,6 +70,12 @@ public class NewsFragment extends Fragment{
         return fragmentFirst;
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        GetTabSubCategory getSubCategory = new GetTabSubCategory();
+        getSubCategory.execute();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,6 +89,32 @@ public class NewsFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_news, container, false);
+
+        SubCatpager = (ViewPager) view.findViewById(R.id.SubCatpager_hod);
+        subCattabLayout = (TabLayout) view.findViewById(R.id.subCattabLayout);
+        subCattabLayout.setupWithViewPager(SubCatpager);
+
+        subCattabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                tabTitlesSubCat.clear();
+                int p = tab.getPosition();
+                arrPosition = tabTitlesSubCatId.get(p);
+                GetNewsList getNewsList=new GetNewsList();
+                getNewsList.execute();
+                
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         rvNewsList=(RecyclerView)view.findViewById(R.id.rvNewsList);
         rvNewsList.setHasFixedSize(true);
@@ -111,13 +151,11 @@ public class NewsFragment extends Fragment{
         protected String doInBackground(String... params) {
             newsArrayList.clear();
             String langId=HomeActivity.str_language_Code;
-            String news_cat=title;
-            String last_news_id="0";
             JSONObject newsList=new JSONObject();
             try {
                 newsList.put("lang",langId);
-                newsList.put("news_cat",news_cat);
-                newsList.put("last_news_id",last_news_id);
+                newsList.put("news_cat",title);
+                newsList.put("news_subcat",arrPosition);
                 Postdata postdata=new Postdata();
                 String news=postdata.post(url+"fatch_newslist.php",newsList.toString());
                 JSONObject j=new JSONObject(news);
@@ -126,17 +164,17 @@ public class NewsFragment extends Fragment{
                 {
                     Log.d("Like","Successfully");
                     message = j.getString("message");
-                    JSONArray newsarr=j.getJSONArray("tbl_newslist");
+                    JSONArray newsarr=j.getJSONArray("tbl_news");
                     for(int i=0;i<newsarr.length();i++)
                     {
                         JSONObject newsJson=newsarr.getJSONObject(i);
-                        String newsCatId=newsJson.getString("news_cat");
+
                         String newsTitle=newsJson.getString("news_title");
                         String newsDetails=newsJson.getString("news_desc");
                         String newsImg=newsJson.getString("news_img");
-                        String newsDate=newsJson.getString("news_date");
+                        String newsDate=newsJson.getString("date");
 
-                        NewsModel n=new NewsModel(newsCatId,newsTitle,newsDetails,newsImg,newsDate);
+                        NewsModel n=new NewsModel(newsTitle,newsDetails,newsImg,newsDate);
                         newsArrayList.add(n);
                     }
                 }
@@ -160,7 +198,7 @@ public class NewsFragment extends Fragment{
                     HashMap<String,String > cat = new HashMap<>();
                     JSONObject j=Advertise.getJSONObject(i);
 
-                    String addImg=j.getString("add_img");
+                    String addImg=j.getString("add_banner");
                     String addLink=j.getString("add_link");
 
                     cat.put("addImg",url+"add_img/"+addImg);
@@ -179,8 +217,14 @@ public class NewsFragment extends Fragment{
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             dialog.dismiss();
-            RecyclerView.Adapter rvNewsAdapter=new NewsAdapter(getActivity(),newsArrayList,adcenterList);
-            rvNewsList.setAdapter(rvNewsAdapter);
+            if(status.equals("1"))
+            {
+                RecyclerView.Adapter rvNewsAdapter=new NewsAdapter(getActivity(),newsArrayList,adcenterList);
+                rvNewsList.setAdapter(rvNewsAdapter);
+            }else {
+                rvNewsList.setAdapter(null);
+            }
+
         }
     }
 
@@ -204,7 +248,7 @@ public class NewsFragment extends Fragment{
                         HashMap<String,String > cat = new HashMap<>();
                         JSONObject j=Advertise.getJSONObject(0);
 
-                        addImg=j.getString("add_img");
+                        addImg=j.getString("add_banner");
                         addLink=j.getString("add_link");
 
                         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
@@ -297,7 +341,7 @@ public class NewsFragment extends Fragment{
                     {
                         JSONObject j=Advertise.getJSONObject(i);
 
-                        addImg=j.getString("add_img");
+                        addImg=j.getString("add_banner");
                         addLink=j.getString("add_link");
 
                         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
@@ -357,6 +401,66 @@ public class NewsFragment extends Fragment{
                     }
                 }
             });
+        }
+    }
+
+    private class GetTabSubCategory extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+
+            tabTitlesSubCat.clear();
+
+            JSONObject subCatList = new JSONObject();
+
+            try {
+                subCatList.put("subcat_cat", title);
+                Postdata postdata = new Postdata();
+                String subCatpd = postdata.post(url + "fatch_news_sub_category.php", subCatList.toString());
+                JSONObject j1 = new JSONObject(subCatpd);
+                status = j1.getString("status");
+                if (status.equals("1")) {
+                    Log.d("Like", "Successfully");
+                    message = j1.getString("message");
+                    tabTitlesSubCatId.clear();
+                    JSONArray subcategory = j1.getJSONArray("tbl_subcategory");
+                    for (int i1 = 0; i1 < subcategory.length(); i1++) {
+                        JSONObject jo = subcategory.getJSONObject(i1);
+
+                        String subcat_id = jo.getString("subcat_id");
+                        String subcat_name = jo.getString("subcat_name");
+
+                        tabTitlesSubCatId.add(subcat_id);
+                        tabTitlesSubCat.add(subcat_name);
+                    }
+                } else {
+                    message = j1.getString("message");
+                    //subCattabLayout.setVisibility(View.GONE);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (status.equals("1")) {
+                subAdapter = new SubCatPager(getFragmentManager());
+                for (int i = 0; i < tabTitlesSubCat.size(); i++) {
+                    subAdapter.addFrag(new SubNewsFragment(), tabTitlesSubCat.get(i).trim());
+                }
+                if (tabTitlesSubCat.size() <= 3) {
+                    subCattabLayout.setTabMode(TabLayout.MODE_FIXED);
+                } else {
+                    subCattabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+                }
+                SubCatpager.setAdapter(subAdapter);
+                subCattabLayout.setVisibility(View.VISIBLE);
+            } else {
+                subCattabLayout.setVisibility(View.GONE);
+            }
+
         }
     }
 }
