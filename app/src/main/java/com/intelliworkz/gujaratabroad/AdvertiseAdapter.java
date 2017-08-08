@@ -49,6 +49,8 @@ class AdvertiseAdapter extends RecyclerView.Adapter<AdvertiseAdapter.ViewHolder>
         holder.txtAdtitle.setText(adTitle);
 
 
+        final String add_thumbnill = advertiseList.get(position).get("add_thumbnill");
+
         final String urlImg = advertiseList.get(position).get("add_banner");
 
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
@@ -76,7 +78,7 @@ class AdvertiseAdapter extends RecyclerView.Adapter<AdvertiseAdapter.ViewHolder>
             public void onClick(View v) {
 //                Toast.makeText(context,"hi",Toast.LENGTH_SHORT).show();
                 Intent i=new Intent(context,ZoomAdvertiseActivity.class);
-                i.putExtra("urlImg",urlImg);
+                i.putExtra("add_thumbnill",add_thumbnill);
                 i.putExtra("adWebUrl",adWebUrl);
                 i.putExtra("adTitle",adTitle);
                 context.startActivity(i);

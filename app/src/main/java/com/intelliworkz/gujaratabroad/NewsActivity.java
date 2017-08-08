@@ -1,6 +1,7 @@
 package com.intelliworkz.gujaratabroad;
 
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -9,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -115,24 +117,47 @@ public class NewsActivity extends AppCompatActivity
             finish();
 
         }
-       /* else if (id == R.id.nav_share)
+        else if (id == R.id.nav_share)
         {
             Intent i=new Intent(Intent.ACTION_SEND);
             i.setType("text/plain");
-            String body="Link here";
+            String body="https://play.google.com/store/apps/details?id=com.intelliworkz.gujaratabroad";
             i.putExtra(Intent.EXTRA_SUBJECT,body);
             i.putExtra(Intent.EXTRA_TEXT,body);
             startActivity(Intent.createChooser(i,"Share using"));
             finish();
 
-        }*/
-       /* else if (id == R.id.nav_rate) {
-
-        }*/
+        }
+        else if (id == R.id.nav_rate)
+        {
+            Intent i=new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.intelliworkz.gujaratabroad"));
+            if(!MyStartActivity(i))
+            {
+                i.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.intelliworkz.gujaratabroad"));
+                if(!MyStartActivity(i))
+                {
+                    Log.d("Like","Could not open browser");
+                }
+            }
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private boolean MyStartActivity(Intent i) {
+
+        try
+        {
+            startActivity(i);
+            return true;
+        }
+        catch (ActivityNotFoundException e)
+        {
+            return false;
+        }
     }
 
     private class GetTabCategrory extends AsyncTask<String,Void,String> {

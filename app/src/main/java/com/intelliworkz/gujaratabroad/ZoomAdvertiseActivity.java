@@ -37,7 +37,7 @@ public class ZoomAdvertiseActivity extends AppCompatActivity {
         }
 
         imgZoom=(ImageView)findViewById(R.id.imgZoom);
-        zoomImage=getIntent().getExtras().getString("urlImg");
+        zoomImage=getIntent().getExtras().getString("add_thumbnill");
         txtAdZoomtitle=(TextView)findViewById(R.id.txtAdZoomtitle);
 
         String addTitle=getIntent().getExtras().getString("adTitle");

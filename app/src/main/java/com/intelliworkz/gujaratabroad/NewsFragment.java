@@ -102,7 +102,7 @@ public class NewsFragment extends Fragment{
                 arrPosition = tabTitlesSubCatId.get(p);
                 GetNewsList getNewsList=new GetNewsList();
                 getNewsList.execute();
-                
+
             }
 
             @Override

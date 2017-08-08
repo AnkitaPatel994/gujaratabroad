@@ -127,20 +127,30 @@ public class VideoActivity extends AppCompatActivity
             startActivity(i);
             finish();
         }
-      /*  else if (id == R.id.nav_share)
+        else if (id == R.id.nav_share)
         {
             Intent i=new Intent(Intent.ACTION_SEND);
             i.setType("text/plain");
-            String body="Link here";
+            String body="https://play.google.com/store/apps/details?id=com.intelliworkz.gujaratabroad";
             i.putExtra(Intent.EXTRA_SUBJECT,body);
             i.putExtra(Intent.EXTRA_TEXT,body);
             startActivity(Intent.createChooser(i,"Share using"));
             finish();
 
-        }*/
-       /* else if (id == R.id.nav_rate) {
-
-        }*/
+        }
+        else if (id == R.id.nav_rate)
+        {
+            Intent i=new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.intelliworkz.gujaratabroad"));
+            if(!MyStartActivity(i))
+            {
+                i.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.intelliworkz.gujaratabroad"));
+                if(!MyStartActivity(i))
+                {
+                    Log.d("Like","Could not open browser");
+                }
+            }
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -249,8 +259,6 @@ public class VideoActivity extends AppCompatActivity
                         addImg=j.getString("add_banner");
                         addLink=j.getString("add_link");
 
-
-
                         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                                 .cacheOnDisc(true).cacheInMemory(true)
                                 .imageScaleType(ImageScaleType.EXACTLY)
@@ -303,7 +311,7 @@ public class VideoActivity extends AppCompatActivity
                         i.setData(Uri.parse(addLink));
                         if(!MyStartActivity(i))
                         {
-                            Toast.makeText(getApplicationContext(),"Could not open browser",Toast.LENGTH_SHORT).show();
+                            Log.d("Like","Could not open browser");
                         }
                     }
                 }
@@ -385,7 +393,7 @@ public class VideoActivity extends AppCompatActivity
                         i.setData(Uri.parse(addLink));
                         if(!MyStartActivity(i))
                         {
-                            Toast.makeText(getApplicationContext(),"Could not open browser",Toast.LENGTH_SHORT).show();
+                            Log.d("Like","Could not open browser");
                         }
                     }
                 }
