@@ -61,8 +61,11 @@ class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
 
         final String videoUrlView = videoList.get(position).get("video_thumb");
         holder.layAdVideo.setVisibility(View.GONE);
+
+        //Image Thumb Code
         GetImgThumb imgThumb=new GetImgThumb(videoUrlView,holder);
         imgThumb.execute();
+        //Image Thumb Code
 
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                 .cacheOnDisc(true).cacheInMemory(true)

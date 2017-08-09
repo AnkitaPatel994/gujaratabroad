@@ -87,7 +87,7 @@ public class AdvertiseActivity extends AppCompatActivity
         int id = item.getItemId();
         if (id == R.id.nav_home)
         {
-            Intent i=new Intent(getApplicationContext(),HomeActivity.class);
+            Intent i=new Intent(getApplicationContext(),FirstActivity.class);
             startActivity(i);
         }
         else if (id == R.id.nav_news)

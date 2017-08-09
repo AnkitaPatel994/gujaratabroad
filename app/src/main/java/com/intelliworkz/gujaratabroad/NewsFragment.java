@@ -129,10 +129,10 @@ public class NewsFragment extends Fragment{
         GetAdTopNews getAdTopNews=new GetAdTopNews();
         getAdTopNews.execute();
 
-        imgAdBottomNews=(ImageView)view.findViewById(R.id.img_adNewsBottom);
-        GetAdBottomNews getAdBottomNews=new GetAdBottomNews();
+       // imgAdBottomNews=(ImageView)view.findViewById(R.id.img_adNewsBottom);
+        /*GetAdBottomNews getAdBottomNews=new GetAdBottomNews();
         getAdBottomNews.execute();
-
+*/
         return view;
     }
 

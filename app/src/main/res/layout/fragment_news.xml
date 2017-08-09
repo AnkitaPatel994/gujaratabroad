@@ -8,80 +8,99 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent">
-    <android.support.design.widget.TabLayout
-        android:id="@+id/subCattabLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorSubCatTab"
-        android:minHeight="?attr/actionBarSize"
-        app:tabIndicatorColor="#ffff"
-        app:tabSelectedTextColor="#fff"
-        app:tabMode="scrollable"
-        android:visibility="gone"
-        app:tabTextAppearance="@style/TextAppearance.AppCompat"
-        app:tabTextColor="#fff" />
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/SubCatpager_hod"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/subCattabLayout" />
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/subCattabLayout">
-
-        <RelativeLayout
-            android:id="@+id/rlTop"
+        <android.support.design.widget.TabLayout
+            android:id="@+id/subCattabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true">
+            android:background="@color/colorSubCatTab"
+            android:minHeight="?attr/actionBarSize"
+            android:visibility="gone"
+            app:tabIndicatorColor="#ffff"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="#fff"
+            app:tabTextAppearance="@style/TextAppearance.AppCompat"
+            app:tabTextColor="#fff" />
 
-            <ImageView
-                android:id="@+id/img_adNews"
-                android:layout_width="fill_parent"
-                android:layout_height="80dp"
-                android:gravity="center"
-                android:scaleType="fitXY"
-                android:textColor="#000"
-                android:textSize="40dp" />
-        </RelativeLayout>
-
-        <LinearLayout
-            android:id="@+id/llCenter"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/SubCatpager_hod"
             android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@+id/subCattabLayout" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/rlBottom"
-            android:layout_below="@+id/rlTop"
-            android:orientation="vertical">
+            android:layout_below="@+id/subCattabLayout">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvNewsList"
+            <RelativeLayout
+                android:id="@+id/rlTop"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true">
 
-        <RelativeLayout
-            android:id="@+id/rlBottom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true">
+                <ImageView
+                    android:id="@+id/img_adNews"
+                    android:layout_width="fill_parent"
+                    android:layout_height="80dp"
+                    android:gravity="center"
+                    android:scaleType="fitXY"
+                    android:textColor="#000"
+                    android:textSize="40dp" />
+            </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/img_adNewsBottom"
+            <LinearLayout
+                android:id="@+id/llCenter"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:gravity="center"
-                android:scaleType="fitXY"
-                android:textColor="#000"
-                android:textSize="40dp" />
+                android:layout_height="match_parent"
+                android:layout_above="@+id/rlBottom"
+                android:layout_below="@+id/rlTop"
+                android:orientation="vertical">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvNewsList"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/rlBottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/img_adBottomNews1"
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/image_border"
+                    android:cropToPadding="true"
+                    android:padding="1dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/banner"
+                    android:text="beginner"
+                    android:textAllCaps="false"
+                    android:textColor="#ffff"
+                    android:textStyle="normal" />
+
+                <ImageView
+                    android:id="@+id/img_adBottomNews2"
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/image_border"
+                    android:cropToPadding="true"
+                    android:padding="1dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/banner2"
+                    android:text="beginner"
+                    android:textAllCaps="false"
+                    android:textColor="#ffff"
+                    android:textStyle="normal" />
+            </LinearLayout>
 
         </RelativeLayout>
-
-    </RelativeLayout>
     </RelativeLayout>
 </FrameLayout>
