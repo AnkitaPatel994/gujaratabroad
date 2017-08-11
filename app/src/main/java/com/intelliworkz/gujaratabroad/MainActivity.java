@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     try {
                         sleep(3*1000);
-                        Intent i = new Intent(getApplicationContext(),HomeActivity.class);
+                        Intent i = new Intent(getApplicationContext(),FirstActivity.class);
                         startActivity(i);
                         finish();
                     } catch (InterruptedException e) {

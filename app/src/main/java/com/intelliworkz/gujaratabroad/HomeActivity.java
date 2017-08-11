@@ -8,7 +8,7 @@ import android.widget.Button;
 
 public class HomeActivity extends AppCompatActivity {
     Button btnEnglish,btnGujarati;
-    public  static String str_language_Code="1";
+    public  static String str_language_Code="2";
     public static String SERVICE_URL= "http://gujaratabroad.online/GujaratAboardWebService/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {

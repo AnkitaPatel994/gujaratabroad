@@ -92,7 +92,7 @@ public class NewsActivity extends AppCompatActivity
 
         if (id == R.id.nav_home)
         {
-            Intent i=new Intent(getApplicationContext(),HomeActivity.class);
+            Intent i=new Intent(getApplicationContext(),FirstActivity.class);
             startActivity(i);
         }
         else if (id == R.id.nav_advertisement)
