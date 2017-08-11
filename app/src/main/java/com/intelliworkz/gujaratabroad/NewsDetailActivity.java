@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -51,7 +52,7 @@ public class NewsDetailActivity extends AppCompatActivity {
         txtNDate.setText(NewsDate);
 
         NewsDesc=getIntent().getExtras().getString("newsDesc");
-        txtNDesc.setText(NewsDesc);
+        txtNDesc.setText(Html.fromHtml(NewsDesc));
 
         NewsImg=getIntent().getExtras().getString("urlImg");
 
