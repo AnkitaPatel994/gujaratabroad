@@ -1,15 +1,11 @@
 package com.intelliworkz.gujaratabroad;
 
-import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -20,32 +16,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
-public class NewsActivity extends AppCompatActivity
+public class ContactUsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private TabLayout tabLayout;
-    private ViewPager pager;
-    ProgressDialog dialog;
-
-    String url=HomeActivity.SERVICE_URL;
-    ArrayList<String> tabTitles=new ArrayList<>();
-    public static ArrayList<String> tabTitlesId=new ArrayList<>();
-    Pager adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news);
+        setContentView(R.layout.activity_contact_us);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -56,23 +36,6 @@ public class NewsActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        Menu menu = navigationView.getMenu();
-        MenuItem menuItem = menu.getItem(1);
-        menuItem.setChecked(true);
-
-        //Tab Start
-        tabTitles.clear();
-        tabTitlesId.clear();
-
-        pager = (ViewPager) findViewById(R.id.pager_hod);
-
-        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        tabLayout.setupWithViewPager(pager);
-
-        GetTabCategrory tabCat=new GetTabCategrory();
-        tabCat.execute();
-
     }
 
     @Override
@@ -84,7 +47,6 @@ public class NewsActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -95,15 +57,21 @@ public class NewsActivity extends AppCompatActivity
             Intent i=new Intent(getApplicationContext(),FirstActivity.class);
             startActivity(i);
         }
-        else if (id == R.id.nav_advertisement)
+        else if (id == R.id.nav_news)
         {
-            Intent i=new Intent(getApplicationContext(),AdvertiseActivity.class);
+            Intent i=new Intent(getApplicationContext(),NewsActivity.class);
             startActivity(i);
             finish();
         }
-        else if (id == R.id.nav_videos)
+        else if(id == R.id.nav_videos)
         {
             Intent i=new Intent(getApplicationContext(),VideoActivity.class);
+            startActivity(i);
+            finish();
+        }
+        else if (id == R.id.nav_advertisement)
+        {
+            Intent i=new Intent(getApplicationContext(),AdvertiseActivity.class);
             startActivity(i);
             finish();
 
@@ -115,14 +83,6 @@ public class NewsActivity extends AppCompatActivity
             i.setData(Uri.parse(url));
             startActivity(i);
             finish();
-
-        }
-        else if (id == R.id.nav_contact)
-        {
-            Intent i=new Intent(getApplicationContext(),ContactUsActivity.class);
-            startActivity(i);
-            finish();
-
         }
         else if (id == R.id.nav_share)
         {
@@ -164,64 +124,6 @@ public class NewsActivity extends AppCompatActivity
         catch (ActivityNotFoundException e)
         {
             return false;
-        }
-    }
-
-    private class GetTabCategrory extends AsyncTask<String,Void,String> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            dialog=new ProgressDialog(NewsActivity.this);
-            dialog.setTitle("Loading....");
-            dialog.show();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            String response;
-            HttpHandler h=new HttpHandler();
-            response= h.serverConnection(url+"fatch_news_category.php");
-            if(response!=null)
-            {
-                try {
-                    JSONObject jsonObject=new JSONObject(response);
-                    JSONArray category=jsonObject.getJSONArray("tbl_category");
-                    for (int i=0;i<category.length();i++)
-                    {
-                        JSONObject j=category.getJSONObject(i);
-
-                        String catName=j.getString("cat_name");
-                        String catId=j.getString("cat_id");
-
-                        tabTitlesId.add(catId);
-                        tabTitles.add(catName);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-            else
-            {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(),"Server Connection Not Found..",Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            dialog.dismiss();
-            adapter = new Pager(getSupportFragmentManager());
-            for (int i = 0; i < tabTitles.size(); i++) {
-                adapter.addFrag(new NewsFragment(), tabTitles.get(i).trim());
-            }
-            pager.setAdapter(adapter);
         }
     }
 }

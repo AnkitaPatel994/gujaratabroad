@@ -127,6 +127,13 @@ public class VideoActivity extends AppCompatActivity
             startActivity(i);
             finish();
         }
+        else if (id == R.id.nav_contact)
+        {
+            Intent i=new Intent(getApplicationContext(),ContactUsActivity.class);
+            startActivity(i);
+            finish();
+
+        }
         else if (id == R.id.nav_share)
         {
             Intent i=new Intent(Intent.ACTION_SEND);

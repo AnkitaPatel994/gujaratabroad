@@ -21,42 +21,41 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomeActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".FirstActivity"
-            android:screenOrientation="portrait"/>
-
+        <activity
+            android:name=".HomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FirstActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".VideoActivity"
             android:label="@string/title_activity_video"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".VideoViewActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
-
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".AdvertiseActivity"
             android:label="@string/title_activity_advertise"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".ZoomAdvertiseActivity"
-            android:screenOrientation="portrait"/>
-
+        <activity
+            android:name=".ZoomAdvertiseActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".NewsActivity"
             android:label="@string/title_activity_news"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".NewsDetailActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NewsDetailActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".ContactUsActivity"
+            android:label="@string/title_activity_contact_us"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
