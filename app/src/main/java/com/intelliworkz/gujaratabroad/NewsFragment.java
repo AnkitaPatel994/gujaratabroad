@@ -48,7 +48,7 @@ public class NewsFragment extends Fragment{
     Activity activity;
 
     RecyclerView rvNewsList;
-    ImageView img_adNews,imgAdBottomNews;
+    ImageView img_adNews,imgAdBottomLeftNews,imgAdBottomRightNews;
     String status,message;
     ArrayList<NewsModel> newsArrayList=new ArrayList<>();
     ArrayList<HashMap<String,String>> adcenterList=new ArrayList<>();
@@ -129,10 +129,14 @@ public class NewsFragment extends Fragment{
         GetAdTopNews getAdTopNews=new GetAdTopNews();
         getAdTopNews.execute();
 
-       // imgAdBottomNews=(ImageView)view.findViewById(R.id.img_adNewsBottom);
-        /*GetAdBottomNews getAdBottomNews=new GetAdBottomNews();
-        getAdBottomNews.execute();
-*/
+        imgAdBottomLeftNews=(ImageView)view.findViewById(R.id.img_adBottomLeftNews);
+        GetAdBottomLeftNews adBottomLeftNews=new GetAdBottomLeftNews();
+        adBottomLeftNews.execute();
+
+        imgAdBottomRightNews=(ImageView)view.findViewById(R.id.img_adBottomRightNews);
+        GetAdBottomRightNews adBottomRightNews=new GetAdBottomRightNews();
+        adBottomRightNews.execute();
+
         return view;
     }
 
@@ -187,24 +191,31 @@ public class NewsFragment extends Fragment{
                 e.printStackTrace();
             }
 
-            String response;
-            HttpHandler h=new HttpHandler();
-            response= h.serverConnection(url+"fatch_addlist.php");
+            JSONObject adCenterList=new JSONObject();
             try {
-                JSONObject jsonObject=new JSONObject(response);
-                JSONArray Advertise=jsonObject.getJSONArray("tbl_addlist");
-                for (int i=1;i<(Advertise.length())-1;i++)
+                adCenterList.put("type","id_top");
+                Postdata postdata=new Postdata();
+                String adPd=postdata.post(url+"get_advertisement.php",adCenterList.toString());
+                JSONObject j=new JSONObject(adPd);
+                status=j.getString("status");
+                if(status.equals("1"))
                 {
-                    HashMap<String,String > cat = new HashMap<>();
-                    JSONObject j=Advertise.getJSONObject(i);
+                    Log.d("Like","Successfully");
+                    message = j.getString("message");
+                    JSONArray adJsArry=j.getJSONArray("data");
+                    for (int i=0;i<adJsArry.length();i++)
+                    {
+                        HashMap<String,String > cat = new HashMap<>();
+                        JSONObject jo=adJsArry.getJSONObject(i);
 
-                    String addImg=j.getString("add_banner");
-                    String addLink=j.getString("add_link");
+                        String addImg=jo.getString("add_banner");
+                        String addLink=jo.getString("add_link");
 
-                    cat.put("addImg",url+"add_img/"+addImg);
-                    cat.put("addLink",addLink);
+                        cat.put("addImg",url+"add_img/"+addImg);
+                        cat.put("addLink",addLink);
 
-                    adcenterList.add(cat);
+                        adcenterList.add(cat);
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -228,28 +239,32 @@ public class NewsFragment extends Fragment{
         }
     }
 
-
     private class GetAdTopNews extends AsyncTask<String,Void,String>{
         String addImg,addLink;
         ImageLoader imageLoader;
         DisplayImageOptions options;
         @Override
         protected String doInBackground(String... params) {
-            String response;
-            HttpHandler h=new HttpHandler();
-            response= h.serverConnection(url+"fatch_addlist.php");
-            if(response!=null)
-            {
-                try {
-                    JSONObject jsonObject=new JSONObject(response);
-                    JSONArray Advertise=jsonObject.getJSONArray("tbl_addlist");
-                    for (int i=0;i<Advertise.length();i++)
-                    {
-                        HashMap<String,String > cat = new HashMap<>();
-                        JSONObject j=Advertise.getJSONObject(0);
 
-                        addImg=j.getString("add_banner");
-                        addLink=j.getString("add_link");
+            JSONObject adTopList=new JSONObject();
+            try {
+                adTopList.put("type","id_top");
+                Postdata postdata=new Postdata();
+                String adPd=postdata.post(url+"get_advertisement.php",adTopList.toString());
+                JSONObject j=new JSONObject(adPd);
+                status=j.getString("status");
+                if(status.equals("1"))
+                {
+                    Log.d("Like","Successfully");
+                    message = j.getString("message");
+                    JSONArray adJsArry=j.getJSONArray("data");
+
+                    for (int i=0;i<adJsArry.length();i++)
+                    {
+                        JSONObject jo=adJsArry.getJSONObject(0);
+
+                        addImg=jo.getString("add_banner");
+                        addLink=jo.getString("add_link");
 
                         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                                 .cacheOnDisc(true).cacheInMemory(true)
@@ -271,18 +286,9 @@ public class NewsFragment extends Fragment{
                                 .showImageOnLoading(fallback).build();
 
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
-            else
-            {
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(activity,"Server Connection Not Found..",Toast.LENGTH_SHORT).show();
-                    }
-                });
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
             return null;
         }
@@ -307,7 +313,6 @@ public class NewsFragment extends Fragment{
                     }
                 }
             });
-
         }
     }
     private boolean MyStartActivity(Intent i) {
@@ -323,26 +328,32 @@ public class NewsFragment extends Fragment{
         }
     }
 
-    private class GetAdBottomNews extends AsyncTask<String,Void,String>{
+    private class GetAdBottomLeftNews extends AsyncTask<String,Void,String>{
         String addImg,addLink;
         ImageLoader imageLoader;
         DisplayImageOptions options;
         @Override
         protected String doInBackground(String... params) {
-            String response;
-            HttpHandler h=new HttpHandler();
-            response= h.serverConnection(url+"fatch_addlist.php");
-            if(response!=null)
-            {
-                try {
-                    JSONObject jsonObject=new JSONObject(response);
-                    JSONArray Advertise=jsonObject.getJSONArray("tbl_addlist");
-                    for (int i=0;i<Advertise.length();i++)
-                    {
-                        JSONObject j=Advertise.getJSONObject(i);
 
-                        addImg=j.getString("add_banner");
-                        addLink=j.getString("add_link");
+            JSONObject adBottomLeftList=new JSONObject();
+            try {
+                adBottomLeftList.put("type","id_bottom");
+                Postdata postdata=new Postdata();
+                String adPd=postdata.post(url+"get_advertisement.php",adBottomLeftList.toString());
+                JSONObject j=new JSONObject(adPd);
+                status=j.getString("status");
+                if(status.equals("1"))
+                {
+                    Log.d("Like","Successfully");
+                    message = j.getString("message");
+                    JSONArray adJsArry=j.getJSONArray("data");
+
+                    for (int i=0;i<adJsArry.length();i++)
+                    {
+                        JSONObject jo=adJsArry.getJSONObject(0);
+
+                        addImg=jo.getString("add_banner");
+                        addLink=jo.getString("add_link");
 
                         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                                 .cacheOnDisc(true).cacheInMemory(true)
@@ -364,18 +375,9 @@ public class NewsFragment extends Fragment{
                                 .showImageOnLoading(fallback).build();
 
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
-            else
-            {
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(activity,"Server Connection Not Found..",Toast.LENGTH_SHORT).show();
-                    }
-                });
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
             return null;
         }
@@ -384,9 +386,85 @@ public class NewsFragment extends Fragment{
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             String imgUrl=url+"add_img/"+addImg;
-            imageLoader.displayImage(imgUrl,imgAdBottomNews, options);
+            imageLoader.displayImage(imgUrl,imgAdBottomLeftNews, options);
+            imgAdBottomLeftNews.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i=new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(addLink));
+                    if(!MyStartActivity(i))
+                    {
+                        i.setData(Uri.parse(addLink));
+                        if(!MyStartActivity(i))
+                        {
+                            Toast.makeText(getContext(),"Could not open browser",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            });
+        }
+    }
 
-            imgAdBottomNews.setOnClickListener(new View.OnClickListener() {
+    private class GetAdBottomRightNews extends AsyncTask<String,Void,String>{
+        String addImg,addLink;
+        ImageLoader imageLoader;
+        DisplayImageOptions options;
+        @Override
+        protected String doInBackground(String... params) {
+
+            JSONObject adBottomRightList=new JSONObject();
+            try {
+                adBottomRightList.put("type","id_bottom");
+                Postdata postdata=new Postdata();
+                String adPd=postdata.post(url+"get_advertisement.php",adBottomRightList.toString());
+                JSONObject j=new JSONObject(adPd);
+                status=j.getString("status");
+                if(status.equals("1"))
+                {
+                    Log.d("Like","Successfully");
+                    message = j.getString("message");
+                    JSONArray adJsArry=j.getJSONArray("data");
+
+                    for (int i=0;i<adJsArry.length();i++)
+                    {
+                        JSONObject jo=adJsArry.getJSONObject(1);
+
+                        addImg=jo.getString("add_banner");
+                        addLink=jo.getString("add_link");
+
+                        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                                .cacheOnDisc(true).cacheInMemory(true)
+                                .imageScaleType(ImageScaleType.EXACTLY)
+                                .displayer(new FadeInBitmapDisplayer(300)).build();
+                        final ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getContext())
+                                .defaultDisplayImageOptions(defaultOptions)
+                                .memoryCache(new WeakMemoryCache())
+                                .discCacheSize(100 * 1024 * 1024).build();
+
+                        ImageLoader.getInstance().init(config);
+
+                        imageLoader = ImageLoader.getInstance();
+                        int fallback = 0;
+                        options = new DisplayImageOptions.Builder().cacheInMemory(true)
+                                .cacheOnDisc(true).resetViewBeforeLoading(true)
+                                .showImageForEmptyUri(fallback)
+                                .showImageOnFail(fallback)
+                                .showImageOnLoading(fallback).build();
+
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            String imgUrl=url+"add_img/"+addImg;
+            imageLoader.displayImage(imgUrl,imgAdBottomRightNews, options);
+            imgAdBottomRightNews.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i=new Intent(Intent.ACTION_VIEW);

@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,15 +36,17 @@ public class VideoViewActivity extends AppCompatActivity {
     UniversalMediaController media_controller;
     TextView txtVVTile;
     String url=HomeActivity.SERVICE_URL;
-    ImageView img_adTopVideo,img_adBottomVideo;
+    ImageView img_adTopVideo,img_adBottomLeftVideo,img_adBottomRightVideo;
     RelativeLayout top,bottom,rlVideo;
+    String status,message;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_view);
 
         setTitle(R.string.title_app);
-        img_adBottomVideo=(ImageView)findViewById(R.id.img_adBottomVideo);
+        img_adBottomLeftVideo=(ImageView)findViewById(R.id.img_adBottomLeftVideo);
+        img_adBottomRightVideo=(ImageView)findViewById(R.id.img_adBottomRightVideo);
         img_adTopVideo=(ImageView)findViewById(R.id.img_adTopVideo);
         top=(RelativeLayout)findViewById(R.id.top);
         bottom=(RelativeLayout)findViewById(R.id.bottom);
@@ -135,6 +138,9 @@ public class VideoViewActivity extends AppCompatActivity {
 
         GetBottomAdBanner getBottomAdBanner=new GetBottomAdBanner();
         getBottomAdBanner.execute();
+
+        GetBottomAdRightBanner bottomAdRightBanner = new GetBottomAdRightBanner();
+        bottomAdRightBanner.execute();
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -149,21 +155,26 @@ public class VideoViewActivity extends AppCompatActivity {
         DisplayImageOptions options;
         @Override
         protected String doInBackground(String... params) {
-            String response;
-            HttpHandler h=new HttpHandler();
-            response= h.serverConnection(url+"fatch_addlist.php");
-            if(response!=null)
-            {
-                try {
-                    JSONObject jsonObject=new JSONObject(response);
-                    JSONArray Advertise=jsonObject.getJSONArray("tbl_addlist");
-                    for (int i=0;i<Advertise.length();i++)
-                    {
-                        HashMap<String,String > cat = new HashMap<>();
-                        JSONObject j=Advertise.getJSONObject(0);
 
-                        addImg=j.getString("add_banner");
-                        addLink=j.getString("add_link");
+            JSONObject adTopList=new JSONObject();
+            try {
+                adTopList.put("type","id_top");
+                Postdata postdata=new Postdata();
+                String adPd=postdata.post(url+"get_advertisement.php",adTopList.toString());
+                JSONObject j=new JSONObject(adPd);
+                status=j.getString("status");
+                if(status.equals("1"))
+                {
+                    Log.d("Like","Successfully");
+                    message = j.getString("message");
+                    JSONArray adJsArry=j.getJSONArray("data");
+
+                    for (int i=0;i<adJsArry.length();i++)
+                    {
+                        JSONObject jo=adJsArry.getJSONObject(0);
+
+                        addImg=jo.getString("add_banner");
+                        addLink=jo.getString("add_link");
 
                         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                                 .cacheOnDisc(true).cacheInMemory(true)
@@ -185,18 +196,9 @@ public class VideoViewActivity extends AppCompatActivity {
                                 .showImageOnLoading(fallback).build();
 
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
-            else
-            {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(),"Server Connection Not Found..",Toast.LENGTH_SHORT).show();
-                    }
-                });
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
             return null;
         }
@@ -206,7 +208,6 @@ public class VideoViewActivity extends AppCompatActivity {
             super.onPostExecute(s);
             String imgUrl=url+"add_img/"+addImg;
             imageLoader.displayImage(imgUrl,img_adTopVideo, options);
-
             img_adTopVideo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -231,20 +232,26 @@ public class VideoViewActivity extends AppCompatActivity {
         DisplayImageOptions options;
         @Override
         protected String doInBackground(String... params) {
-            String response;
-            HttpHandler h=new HttpHandler();
-            response= h.serverConnection(url+"fatch_addlist.php");
-            if(response!=null)
-            {
-                try {
-                    JSONObject jsonObject=new JSONObject(response);
-                    JSONArray Advertise=jsonObject.getJSONArray("tbl_addlist");
-                    for (int i=0;i<Advertise.length();i++)
-                    {
-                        JSONObject j=Advertise.getJSONObject(i);
 
-                        addImg=j.getString("add_banner");
-                        addLink=j.getString("add_link");
+            JSONObject adTopList=new JSONObject();
+            try {
+                adTopList.put("type","id_bottom");
+                Postdata postdata=new Postdata();
+                String adPd=postdata.post(url+"get_advertisement.php",adTopList.toString());
+                JSONObject j=new JSONObject(adPd);
+                status=j.getString("status");
+                if(status.equals("1"))
+                {
+                    Log.d("Like","Successfully");
+                    message = j.getString("message");
+                    JSONArray adJsArry=j.getJSONArray("data");
+
+                    for (int i=0;i<adJsArry.length();i++)
+                    {
+                        JSONObject jo=adJsArry.getJSONObject(0);
+
+                        addImg=jo.getString("add_banner");
+                        addLink=jo.getString("add_link");
 
                         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                                 .cacheOnDisc(true).cacheInMemory(true)
@@ -266,18 +273,9 @@ public class VideoViewActivity extends AppCompatActivity {
                                 .showImageOnLoading(fallback).build();
 
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
-            }
-            else
-            {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(),"Server Connection Not Found..",Toast.LENGTH_SHORT).show();
-                    }
-                });
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
             return null;
         }
@@ -286,8 +284,85 @@ public class VideoViewActivity extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             String imgUrl=url+"add_img/"+addImg;
-            imageLoader.displayImage(imgUrl,img_adBottomVideo, options);
-            img_adBottomVideo.setOnClickListener(new View.OnClickListener() {
+            imageLoader.displayImage(imgUrl,img_adBottomLeftVideo, options);
+            img_adBottomLeftVideo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i=new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(addLink));
+                    if(!MyStartActivity(i))
+                    {
+                        i.setData(Uri.parse(addLink));
+                        if(!MyStartActivity(i))
+                        {
+                            Toast.makeText(getApplicationContext(),"Could not open browser",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    private class GetBottomAdRightBanner extends AsyncTask<String,Void,String> {
+        String addImg,addLink;
+        ImageLoader imageLoader;
+        DisplayImageOptions options;
+        @Override
+        protected String doInBackground(String... params) {
+
+            JSONObject adTopList=new JSONObject();
+            try {
+                adTopList.put("type","id_bottom");
+                Postdata postdata=new Postdata();
+                String adPd=postdata.post(url+"get_advertisement.php",adTopList.toString());
+                JSONObject j=new JSONObject(adPd);
+                status=j.getString("status");
+                if(status.equals("1"))
+                {
+                    Log.d("Like","Successfully");
+                    message = j.getString("message");
+                    JSONArray adJsArry=j.getJSONArray("data");
+
+                    for (int i=0;i<adJsArry.length();i++)
+                    {
+                        JSONObject jo=adJsArry.getJSONObject(1);
+
+                        addImg=jo.getString("add_banner");
+                        addLink=jo.getString("add_link");
+
+                        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
+                                .cacheOnDisc(true).cacheInMemory(true)
+                                .imageScaleType(ImageScaleType.EXACTLY)
+                                .displayer(new FadeInBitmapDisplayer(300)).build();
+                        final ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
+                                .defaultDisplayImageOptions(defaultOptions)
+                                .memoryCache(new WeakMemoryCache())
+                                .discCacheSize(100 * 1024 * 1024).build();
+
+                        ImageLoader.getInstance().init(config);
+
+                        imageLoader = ImageLoader.getInstance();
+                        int fallback = 0;
+                        options = new DisplayImageOptions.Builder().cacheInMemory(true)
+                                .cacheOnDisc(true).resetViewBeforeLoading(true)
+                                .showImageForEmptyUri(fallback)
+                                .showImageOnFail(fallback)
+                                .showImageOnLoading(fallback).build();
+
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            String imgUrl=url+"add_img/"+addImg;
+            imageLoader.displayImage(imgUrl,img_adBottomRightVideo, options);
+            img_adBottomRightVideo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i=new Intent(Intent.ACTION_VIEW);
