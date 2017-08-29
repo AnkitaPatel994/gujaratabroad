@@ -289,6 +289,7 @@ public class NewsDetailActivity extends AppCompatActivity {
             });
         }
     }
+
     private class GetBottomRightBanner extends AsyncTask<String,Void,String> {
         String addImg,addLink;
         ImageLoader imageLoader;
@@ -296,11 +297,11 @@ public class NewsDetailActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
 
-            JSONObject adTopList=new JSONObject();
+            JSONObject adRightList=new JSONObject();
             try {
-                adTopList.put("type","id_bottom");
+                adRightList.put("type","id_bottom");
                 Postdata postdata=new Postdata();
-                String adPd=postdata.post(url+"get_advertisement.php",adTopList.toString());
+                String adPd=postdata.post(url+"get_advertisement.php",adRightList.toString());
                 JSONObject j=new JSONObject(adPd);
                 status=j.getString("status");
                 if(status.equals("1"))
@@ -311,7 +312,7 @@ public class NewsDetailActivity extends AppCompatActivity {
 
                     for (int i=0;i<adJsArry.length();i++)
                     {
-                        JSONObject jo=adJsArry.getJSONObject(1);
+                        JSONObject jo=adJsArry.getJSONObject(0);
 
                         addImg=jo.getString("add_banner");
                         addLink=jo.getString("add_link");
@@ -365,6 +366,7 @@ public class NewsDetailActivity extends AppCompatActivity {
             });
         }
     }
+
     private class GetPopupBanner extends AsyncTask<String,Void,String> {
         String addImg,addLink;
         ImageLoader imageLoader;
