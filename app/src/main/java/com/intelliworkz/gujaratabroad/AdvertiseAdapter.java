@@ -45,10 +45,6 @@ class AdvertiseAdapter extends RecyclerView.Adapter<AdvertiseAdapter.ViewHolder>
     public void onBindViewHolder(ViewHolder holder, int position) {
         final String adWebUrl = advertiseList.get(position).get("addLink");
 
-        final String adTitle = advertiseList.get(position).get("addTitle");
-        holder.txtAdtitle.setText(adTitle);
-
-
         final String add_thumbnill = advertiseList.get(position).get("add_thumbnill");
 
         final String urlImg = advertiseList.get(position).get("add_banner");
@@ -80,7 +76,6 @@ class AdvertiseAdapter extends RecyclerView.Adapter<AdvertiseAdapter.ViewHolder>
                 Intent i=new Intent(context,ZoomAdvertiseActivity.class);
                 i.putExtra("add_thumbnill",add_thumbnill);
                 i.putExtra("adWebUrl",adWebUrl);
-                i.putExtra("adTitle",adTitle);
                 context.startActivity(i);
             }
         });
@@ -93,11 +88,9 @@ class AdvertiseAdapter extends RecyclerView.Adapter<AdvertiseAdapter.ViewHolder>
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imgAd;
-        TextView txtAdtitle;
         public ViewHolder(View itemView) {
             super(itemView);
             imgAd=(ImageView)v.findViewById(R.id.imgAd);
-            txtAdtitle=(TextView)v.findViewById(R.id.txtAdtitle);
         }
     }
 }

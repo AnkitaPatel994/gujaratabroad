@@ -6,17 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.inteliworkz.gujaratabroad.ZoomAdvertiseActivity">
+    tools:context="com.intelliworkz.gujaratabroad.ZoomAdvertiseActivity">
 
-    <TextView
-        android:id="@+id/txtAdZoomtitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:gravity="center"
-        android:textSize="20dp"
-        android:textStyle="bold"/>
 
     <ImageView
         android:id="@+id/imgZoom"
@@ -25,7 +16,8 @@
         app:srcCompat="@drawable/account"
         android:layout_below="@+id/txtAdZoomtitle"
         android:layout_gravity="center"
-        android:layout_margin="30dp"
+        android:layout_margin="10dp"
         tools:layout_editor_absoluteX="93dp"
         tools:layout_editor_absoluteY="60dp" />
+
 </LinearLayout>

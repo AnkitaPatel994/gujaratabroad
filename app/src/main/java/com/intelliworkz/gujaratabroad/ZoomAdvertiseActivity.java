@@ -21,7 +21,7 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 public class ZoomAdvertiseActivity extends AppCompatActivity {
     ImageView imgZoom;
-    TextView txtAdZoomtitle;
+
     String zoomImage;
     ProgressDialog dialog;
     @Override
@@ -38,10 +38,6 @@ public class ZoomAdvertiseActivity extends AppCompatActivity {
 
         imgZoom=(ImageView)findViewById(R.id.imgZoom);
         zoomImage=getIntent().getExtras().getString("add_thumbnill");
-        txtAdZoomtitle=(TextView)findViewById(R.id.txtAdZoomtitle);
-
-        String addTitle=getIntent().getExtras().getString("adTitle");
-        txtAdZoomtitle.setText(addTitle);
 
         GetZoomImgId getZoomImgId=new GetZoomImgId();
         getZoomImgId.execute();

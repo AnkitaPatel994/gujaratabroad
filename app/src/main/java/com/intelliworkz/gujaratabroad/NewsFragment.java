@@ -427,7 +427,7 @@ public class NewsFragment extends Fragment{
 
                     for (int i=0;i<adJsArry.length();i++)
                     {
-                        JSONObject jo=adJsArry.getJSONObject(1);
+                        JSONObject jo=adJsArry.getJSONObject(0);
 
                         addImg=jo.getString("add_banner");
                         addLink=jo.getString("add_link");
