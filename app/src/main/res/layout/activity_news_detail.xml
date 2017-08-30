@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.inteliworkz.gujaratabroad.NewsDetailActivity">
+    tools:context="com.intelliworkz.gujaratabroad.NewsDetailActivity">
     <RelativeLayout
         android:layout_alignParentTop="true"
         android:layout_width="match_parent"
@@ -22,12 +22,10 @@
             android:textSize="40dp" />
     </RelativeLayout>
     <LinearLayout
-        android:id="@+id/center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/top"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_above="@+id/relativeLayout">
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -47,6 +45,35 @@
                     app:srcCompat="@mipmap/ic_launcher"
                     tools:layout_editor_absoluteX="151dp"
                     tools:layout_editor_absoluteY="45dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="10dp">
+                    <ImageView
+                        android:id="@+id/imgNewsThumb1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="80dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/account"/>
+
+                    <ImageView
+                        android:id="@+id/imgNewsThumb2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="80dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/account"/>
+
+                    <ImageView
+                        android:id="@+id/imgNewsThumb3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="80dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/account"/>
+
+                </LinearLayout>
+
+
                 <TextView
                     android:id="@+id/txtNDate"
                     android:layout_width="wrap_content"
@@ -56,16 +83,18 @@
                     android:textSize="18dp"
                     android:layout_marginLeft="20dp"
                     android:text="TextView"/>
+
                 <TextView
                     android:id="@+id/txtNTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="20dp"
-                    android:text="TextView"/>
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="TextView"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/txtNDesc"
                     android:layout_width="wrap_content"
