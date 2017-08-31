@@ -16,6 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.DefaultSliderView;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -32,11 +36,13 @@ import java.util.HashMap;
 
 public class NewsDetailActivity extends AppCompatActivity {
 
-    ImageView imgNewsList,img_adTopNews,img_adBottomLeftfullNews,img_adBottomRightfullNews,imgZoom,imgClose;
+    ImageView img_adTopNews,img_adBottomLeftfullNews,img_adBottomRightfullNews,imgZoom,imgClose;
     TextView txtNDate,txtNTitle,txtNDesc;
     ArrayList<NewsModel> newsArrayList=new ArrayList<>();
-    String message,status,NewsTitle,NewsDate,NewsDesc,NewsImg;
+    String message,status,NewsTitle,NewsDate,NewsDesc,newsId;
     String url=HomeActivity.SERVICE_URL;
+    SliderLayout sliderAd;
+    ArrayList<HashMap<String, String>> ImgArrayList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +50,7 @@ public class NewsDetailActivity extends AppCompatActivity {
         txtNDesc=(TextView)findViewById(R.id.txtNDesc);
         txtNDate=(TextView)findViewById(R.id.txtNDate);
         txtNTitle=(TextView)findViewById(R.id.txtNTitle);
-        imgNewsList=(ImageView)findViewById(R.id.imgNewsList);
+        sliderAd=(SliderLayout)findViewById(R.id.sliderAd);
         img_adTopNews=(ImageView)findViewById(R.id.img_adTopNews);
         img_adBottomLeftfullNews=(ImageView)findViewById(R.id.img_adBottomLeftfullNews);
         img_adBottomRightfullNews=(ImageView)findViewById(R.id.img_adBottomRightfullNews);
@@ -67,8 +73,10 @@ public class NewsDetailActivity extends AppCompatActivity {
         });
         dialog.show();
 
+        newsId=getIntent().getExtras().getString("newsId");
+
         NewsTitle=getIntent().getExtras().getString("newsTitle");
-        txtNTitle.setText(NewsTitle);
+        txtNTitle.setText(Html.fromHtml(NewsTitle));
 
         NewsDate=getIntent().getExtras().getString("newsDate");
         txtNDate.setText(NewsDate);
@@ -76,28 +84,8 @@ public class NewsDetailActivity extends AppCompatActivity {
         NewsDesc=getIntent().getExtras().getString("newsDesc");
         txtNDesc.setText(Html.fromHtml(NewsDesc));
 
-        NewsImg=getIntent().getExtras().getString("urlImg");
-
-        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-                .cacheOnDisc(true).cacheInMemory(true)
-                .imageScaleType(ImageScaleType.EXACTLY)
-                .displayer(new FadeInBitmapDisplayer(300)).build();
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
-                .defaultDisplayImageOptions(defaultOptions)
-                .memoryCache(new WeakMemoryCache())
-                .discCacheSize(100 * 1024 * 1024).build();
-
-        ImageLoader.getInstance().init(config);
-
-        ImageLoader imageLoader = ImageLoader.getInstance();
-        int fallback = 0;
-        DisplayImageOptions options = new DisplayImageOptions.Builder().cacheInMemory(true)
-                .cacheOnDisc(true).resetViewBeforeLoading(true)
-                .showImageForEmptyUri(fallback)
-                .showImageOnFail(fallback)
-                .showImageOnLoading(fallback).build();
-
-        imageLoader.displayImage(NewsImg,imgNewsList, options);
+        GetNewsImg newsImg = new GetNewsImg(newsId);
+        newsImg.execute();
 
         GetTopBanner getTopBanner=new GetTopBanner();
         getTopBanner.execute();
@@ -441,6 +429,75 @@ public class NewsDetailActivity extends AppCompatActivity {
                     }
                 }
             });
+        }
+    }
+
+    private class GetNewsImg extends AsyncTask<String,Void,String> implements BaseSliderView.OnSliderClickListener {
+        String newsId;
+        JSONArray joImgArray;
+
+        public GetNewsImg(String newsId) {
+            this.newsId=newsId;
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            JSONObject joNewsImg = new JSONObject();
+            try {
+                joNewsImg.put("news_id",newsId);
+                Postdata postdata = new Postdata();
+                String newsImgUrl = postdata.post(url+"fatch_news_img.php",joNewsImg.toString());
+                JSONObject joImg=new JSONObject(newsImgUrl);
+                status=joImg.getString("status");
+                if(status.equals("1"))
+                {
+                    Log.d("Like","Successfully");
+                    message = joImg.getString("message");
+                    joImgArray = joImg.getJSONArray("tbl_news_img");
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            for(int i=0;i<joImgArray.length();i++)
+            {
+                HashMap<String,String > con = new HashMap<>();
+                try {
+                    JSONObject jo = joImgArray.getJSONObject(i);
+                    String news_img = jo.getString("news_img");
+                    con.put(String.valueOf(i),url+"news_img/"+news_img);
+
+                    ImgArrayList.add(con);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                for (int i1 = i; i1 <=i; i1++) {
+                    for (String name : con.keySet()) {
+                        DefaultSliderView textSliderView = new DefaultSliderView(NewsDetailActivity.this);
+                        // initialize a SliderLayout
+                        textSliderView
+                                .image(con.get(String.valueOf(i1)))
+                                .setScaleType(BaseSliderView.ScaleType.Fit)
+                                .setOnSliderClickListener(this);
+
+                        sliderAd.addSlider(textSliderView);
+                    }
+                }
+            }
+            sliderAd.setCustomAnimation(new DescriptionAnimation());
+            sliderAd.setDuration(5000);
+        }
+
+        @Override
+        public void onSliderClick(BaseSliderView slider) {
+            sliderAd.startAutoCycle();
         }
     }
 }

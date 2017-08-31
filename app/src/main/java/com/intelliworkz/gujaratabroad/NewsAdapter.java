@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,11 +52,13 @@ class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
+        final String newsId=newsArrayList.get(position).getNewsId();
         final String newsDate=newsArrayList.get(position).getNewsDate();
         final String newsDesc=newsArrayList.get(position).getNewsDetails();
         final String newsTitle=newsArrayList.get(position).getNewsTitle();
 
         String Img = newsArrayList.get(position).getNewsImg();
+
         final String urlImg = url+"news_img/"+Img;
         holder.layAd.setVisibility(View.GONE);
 
@@ -108,13 +111,14 @@ class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 count++;
             }
 
-        holder.txtNewsTitle.setText(newsTitle);
+        holder.txtNewsTitle.setText(Html.fromHtml(newsTitle));
         imageLoader.displayImage(urlImg,holder.imgNews, options);
 
         holder.layNewsList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i=new Intent(context,NewsDetailActivity.class);
+                i.putExtra("newsId",newsId);
                 i.putExtra("newsDate",newsDate);
                 i.putExtra("newsTitle",newsTitle);
                 i.putExtra("newsDesc",newsDesc);

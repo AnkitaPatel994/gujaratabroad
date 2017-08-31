@@ -46,7 +46,7 @@ public class NewsFragment extends Fragment{
     private int page;
 
     Activity activity;
-
+    String newsImg = null;
     RecyclerView rvNewsList;
     ImageView img_adNews,imgAdBottomLeftNews,imgAdBottomRightNews;
     String status,message;
@@ -154,6 +154,7 @@ public class NewsFragment extends Fragment{
         @Override
         protected String doInBackground(String... params) {
             newsArrayList.clear();
+
             String langId=HomeActivity.str_language_Code;
             JSONObject newsList=new JSONObject();
             try {
@@ -173,12 +174,30 @@ public class NewsFragment extends Fragment{
                     {
                         JSONObject newsJson=newsarr.getJSONObject(i);
 
+                        String news_id=newsJson.getString("news_id");
                         String newsTitle=newsJson.getString("news_title");
                         String newsDetails=newsJson.getString("news_desc");
-                        String newsImg=newsJson.getString("news_img");
                         String newsDate=newsJson.getString("date");
 
-                        NewsModel n=new NewsModel(newsTitle,newsDetails,newsImg,newsDate);
+                        JSONObject newsImg1=new JSONObject();
+                        newsImg1.put("news_id",news_id);
+                        Postdata postdata1=new Postdata();
+                        String news1=postdata1.post(url+"fatch_news_img.php",newsImg1.toString());
+                        JSONObject j1=new JSONObject(news1);
+                        status=j1.getString("status");
+                        if(status.equals("1"))
+                        {
+                            Log.d("Like","Successfully");
+                            message = j1.getString("message");
+                            JSONArray newsarray=j1.getJSONArray("tbl_news_img");
+                            for(int i1=0;i1<newsarray.length();i1++)
+                            {
+                                JSONObject newsImgJson=newsarray.getJSONObject(0);
+                                newsImg=newsImgJson.getString("news_img");
+                            }
+                        }
+
+                        NewsModel n=new NewsModel(news_id,newsTitle,newsDetails,newsImg,newsDate);
                         newsArrayList.add(n);
                     }
                 }
