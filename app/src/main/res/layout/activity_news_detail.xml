@@ -30,9 +30,9 @@
 
         <com.daimajia.slider.library.SliderLayout
             android:id="@+id/sliderAd"
-            android:layout_gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="200dp"/>
+            android:layout_height="200dp"
+            android:layout_gravity="center" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -42,17 +42,6 @@
                 android:layout_height="match_parent"
                 android:layout_below="@+id/top"
                 android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/txtNDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginTop="10dp"
-                    android:textSize="18dp"
-                    android:layout_marginLeft="20dp"
-                    android:text="TextView"/>
-
                 <TextView
                     android:id="@+id/txtNTitle"
                     android:layout_width="wrap_content"
@@ -63,6 +52,15 @@
                     android:text="TextView"
                     android:textSize="20dp"
                     android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/txtNDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginTop="10dp"
+                    android:textSize="18dp"
+                    android:layout_marginLeft="20dp"
+                    android:text="TextView"/>
 
                 <TextView
                     android:id="@+id/txtNDesc"
