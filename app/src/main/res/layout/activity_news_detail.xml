@@ -28,11 +28,7 @@
         android:orientation="vertical"
         android:layout_above="@+id/relativeLayout">
 
-        <com.daimajia.slider.library.SliderLayout
-            android:id="@+id/sliderAd"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_gravity="center" />
+
 
         <ScrollView
             android:layout_width="match_parent"
@@ -42,6 +38,13 @@
                 android:layout_height="match_parent"
                 android:layout_below="@+id/top"
                 android:orientation="vertical">
+
+                <com.daimajia.slider.library.SliderLayout
+                    android:id="@+id/sliderAd"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_gravity="center" />
+
                 <TextView
                     android:id="@+id/txtNTitle"
                     android:layout_width="wrap_content"
