@@ -53,15 +53,17 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:text="TextView"
-                    android:textSize="20dp"
+                    android:textSize="25dp"
+                    android:textColor="#181819"
                     android:textStyle="bold" />
                 <TextView
                     android:id="@+id/txtNDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginTop="10dp"
-                    android:textSize="18dp"
+                    android:layout_marginTop="3dp"
+                    android:textSize="12dp"
+                    android:textColor="#7d7d7d"
                     android:layout_marginLeft="20dp"
                     android:text="TextView"/>
 
@@ -70,9 +72,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="20dp"
-                    android:layout_marginTop="10dp"
+                    android:textSize="17dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginLeft="20dp"
+                    android:textColor="#181819"
                     android:text="TextView"/>
 
             </LinearLayout>
