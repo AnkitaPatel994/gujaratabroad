@@ -53,6 +53,7 @@ class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         final String newsId=newsArrayList.get(position).getNewsId();
+        final String mainCatName=newsArrayList.get(position).getMainCatName();
         final String newsDate=newsArrayList.get(position).getNewsDate();
         final String newsDesc=newsArrayList.get(position).getNewsDetails();
         final String newsTitle=newsArrayList.get(position).getNewsTitle();
@@ -119,6 +120,7 @@ class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             public void onClick(View v) {
                 Intent i=new Intent(context,NewsDetailActivity.class);
                 i.putExtra("newsId",newsId);
+                i.putExtra("mainCatName",mainCatName);
                 i.putExtra("newsDate",newsDate);
                 i.putExtra("newsTitle",newsTitle);
                 i.putExtra("newsDesc",newsDesc);

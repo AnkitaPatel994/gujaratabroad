@@ -8,21 +8,26 @@ import org.json.JSONObject;
 
 public class NewsModel {
 
-    String news_id;
-    String newsTitle;
-    String newsDetails;
-    String newsImg;
-    String newsDate;
-    public NewsModel(String news_id, String newsTitle, String newsDetails, String newsImg, String newsDate) {
+    String news_id,mainCatName,newsTitle,newsDetails,newsImg,newsDate;
+
+    public NewsModel(String news_id, String mainCatName, String newsTitle, String newsDetails, String newsImg, String newsDate) {
 
         this.news_id=news_id;
+        this.mainCatName=mainCatName;
         this.newsTitle=newsTitle;
         this.newsDetails=newsDetails;
         this.newsImg=newsImg;
         this.newsDate=newsDate;
+
     }
 
+    public String getMainCatName() {
+        return mainCatName;
+    }
 
+    public void setMainCatName(String mainCatName) {
+        this.mainCatName = mainCatName;
+    }
 
     public String getNewsId() {
         return news_id;
