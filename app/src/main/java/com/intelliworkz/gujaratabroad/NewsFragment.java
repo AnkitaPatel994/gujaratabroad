@@ -174,12 +174,13 @@ public class NewsFragment extends Fragment{
                         JSONObject newsJson=newsarr.getJSONObject(i);
 
                         String news_id=newsJson.getString("news_id");
+                        String mainCatName = newsJson.getString("category_name");
                         String newsTitle=newsJson.getString("news_title");
                         String newsDetails=newsJson.getString("news_desc");
                         String newsDate=newsJson.getString("date");
                         String newsImg=newsJson.getString("news_img");
 
-                        NewsModel n=new NewsModel(news_id,newsTitle,newsDetails,newsImg,newsDate);
+                        NewsModel n=new NewsModel(news_id,mainCatName,newsTitle,newsDetails,newsImg,newsDate);
                         newsArrayList.add(n);
                     }
                 }

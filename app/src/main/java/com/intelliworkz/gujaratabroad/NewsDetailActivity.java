@@ -39,7 +39,7 @@ public class NewsDetailActivity extends AppCompatActivity {
     ImageView img_adTopNews,img_adBottomLeftfullNews,img_adBottomRightfullNews,imgZoom,imgClose;
     TextView txtNDate,txtNTitle,txtNDesc;
     ArrayList<NewsModel> newsArrayList=new ArrayList<>();
-    String message,status,NewsTitle,NewsDate,NewsDesc,newsId;
+    String message,status,NewsTitle,mainCatName,NewsDate,NewsDesc,newsId;
     String url=HomeActivity.SERVICE_URL;
     SliderLayout sliderAd;
     ArrayList<HashMap<String, String>> ImgArrayList = new ArrayList<>();
@@ -78,8 +78,10 @@ public class NewsDetailActivity extends AppCompatActivity {
         NewsTitle=getIntent().getExtras().getString("newsTitle");
         txtNTitle.setText(Html.fromHtml(NewsTitle));
 
+        mainCatName=getIntent().getExtras().getString("mainCatName");
+
         NewsDate=getIntent().getExtras().getString("newsDate");
-        txtNDate.setText(NewsDate);
+        txtNDate.setText(mainCatName+" | "+NewsDate);
 
         NewsDesc=getIntent().getExtras().getString("newsDesc");
         txtNDesc.setText(Html.fromHtml(NewsDesc));
