@@ -115,7 +115,7 @@ public class VideoActivity extends AppCompatActivity
             startActivity(i);
             finish();
         }
-        else if (id == R.id.nav_advertisement)
+        else if (id == R.id.nav_dir)
         {
             Intent i=new Intent(getApplicationContext(),AdvertiseActivity.class);
             startActivity(i);

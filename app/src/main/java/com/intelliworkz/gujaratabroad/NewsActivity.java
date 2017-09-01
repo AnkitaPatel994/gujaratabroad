@@ -95,7 +95,7 @@ public class NewsActivity extends AppCompatActivity
             Intent i=new Intent(getApplicationContext(),FirstActivity.class);
             startActivity(i);
         }
-        else if (id == R.id.nav_advertisement)
+        else if (id == R.id.nav_dir)
         {
             Intent i=new Intent(getApplicationContext(),AdvertiseActivity.class);
             startActivity(i);

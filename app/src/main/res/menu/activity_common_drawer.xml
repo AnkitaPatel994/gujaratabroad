@@ -12,8 +12,8 @@
             android:id="@+id/nav_videos"
             android:title="Videos" />
         <item
-            android:id="@+id/nav_advertisement"
-            android:title="Directory" />
+            android:id="@+id/nav_dir"
+            android:title="Directory"/>
         <item
             android:id="@+id/nav_epaper"
             android:title="E Paper"/>

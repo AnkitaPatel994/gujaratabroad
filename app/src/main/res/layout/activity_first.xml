@@ -61,7 +61,7 @@
         android:layout_marginRight="40dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/button_background"
-        android:text="Advertisement"
+        android:text="Directory"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@android:color/white" />
 

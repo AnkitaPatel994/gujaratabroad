@@ -36,6 +36,11 @@ public class ContactUsActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Menu menu = navigationView.getMenu();
+        MenuItem menuItem = menu.getItem(5);
+        menuItem.setChecked(true);
+
     }
 
     @Override
@@ -69,7 +74,7 @@ public class ContactUsActivity extends AppCompatActivity
             startActivity(i);
             finish();
         }
-        else if (id == R.id.nav_advertisement)
+        else if (id == R.id.nav_dir)
         {
             Intent i=new Intent(getApplicationContext(),AdvertiseActivity.class);
             startActivity(i);
