@@ -22,7 +22,6 @@
             android:layout_below="@+id/imageView2"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-
             android:text="English"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@android:color/white" />
