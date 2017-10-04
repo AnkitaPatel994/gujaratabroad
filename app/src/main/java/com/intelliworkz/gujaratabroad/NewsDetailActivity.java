@@ -467,7 +467,7 @@ public class NewsDetailActivity extends AppCompatActivity {
         }
     }
 
-    private class GetNewsImg extends AsyncTask<String,Void,String> implements BaseSliderView.OnSliderClickListener {
+    private class GetNewsImg extends AsyncTask<String,Void,String>{
         String newsId;
         JSONArray joImgArray;
 
@@ -489,7 +489,10 @@ public class NewsDetailActivity extends AppCompatActivity {
                     Log.d("Like","Successfully");
                     message = joImg.getString("message");
                     joImgArray = joImg.getJSONArray("tbl_news_img");
-
+                }
+                else
+                {
+                    message = joImg.getString("message");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -500,39 +503,52 @@ public class NewsDetailActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            for(int i=0;i<joImgArray.length();i++)
+
+            if(status.equals("1"))
             {
-                HashMap<String,String > con = new HashMap<>();
-                try {
-                    JSONObject jo = joImgArray.getJSONObject(i);
-                    String news_img = jo.getString("news_img");
-                    con.put(String.valueOf(i),url+"news_img/"+news_img);
+                sliderAd.setVisibility(View.VISIBLE);
+                for(int i=0;i<joImgArray.length();i++)
+                {
+                    HashMap<String,String > con = new HashMap<>();
+                    try {
+                        JSONObject jo = joImgArray.getJSONObject(i);
+                        String news_img = jo.getString("news_img");
+                        con.put(String.valueOf(i),url+"news_img/"+news_img);
 
-                    ImgArrayList.add(con);
+                        ImgArrayList.add(con);
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                for (int i1 = i; i1 <=i; i1++) {
-                    for (String name : con.keySet()) {
-                        DefaultSliderView textSliderView = new DefaultSliderView(NewsDetailActivity.this);
-                        // initialize a SliderLayout
-                        textSliderView
-                                .image(con.get(String.valueOf(i1)))
-                                .setScaleType(BaseSliderView.ScaleType.Fit)
-                                .setOnSliderClickListener(this);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    for (int i1 = i; i1 <=i; i1++) {
+                        for (String name : con.keySet()) {
+                            DefaultSliderView textSliderView = new DefaultSliderView(NewsDetailActivity.this);
+                            // initialize a SliderLayout
+                            final int finalI = i1;
+                            textSliderView
+                                    .image(con.get(String.valueOf(i1)))
+                                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                                    .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                                        @Override
+                                        public void onSliderClick(BaseSliderView slider) {
+                                            Toast.makeText(getApplicationContext(),"click = "+ finalI,Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
 
-                        sliderAd.addSlider(textSliderView);
+                            sliderAd.addSlider(textSliderView);
+
+                        }
                     }
                 }
+                sliderAd.setCustomAnimation(new DescriptionAnimation());
+                sliderAd.setDuration(5000);
             }
-            sliderAd.setCustomAnimation(new DescriptionAnimation());
-            sliderAd.setDuration(5000);
+            else
+            {
+                sliderAd.setVisibility(View.GONE);
+            }
+
         }
 
-        @Override
-        public void onSliderClick(BaseSliderView slider) {
-            sliderAd.startAutoCycle();
-        }
     }
 }

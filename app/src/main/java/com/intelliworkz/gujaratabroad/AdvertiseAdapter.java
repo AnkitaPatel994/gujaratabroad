@@ -69,6 +69,7 @@ class AdvertiseAdapter extends RecyclerView.Adapter<AdvertiseAdapter.ViewHolder>
                 .showImageOnLoading(fallback).build();
 
         imageLoader.displayImage(urlImg,holder.imgAd, options);
+
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -400,6 +400,7 @@ public class VideoActivity extends AppCompatActivity
             });
         }
     }
+
     private class GetAdBottomRightBanner extends AsyncTask<String,Void,String>{
         String addImg,addLink;
         ImageLoader imageLoader;

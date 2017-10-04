@@ -229,7 +229,7 @@ public class NewsFragment extends Fragment{
 
             JSONObject adCenterList=new JSONObject();
             try {
-                adCenterList.put("type","id_top");
+                adCenterList.put("type","id_center");
                 Postdata postdata=new Postdata();
                 String adPd=postdata.post(url+"get_advertisement.php",adCenterList.toString());
                 JSONObject j=new JSONObject(adPd);
@@ -537,7 +537,8 @@ public class NewsFragment extends Fragment{
                     message = j1.getString("message");
                     tabTitlesSubCatId.clear();
                     JSONArray subcategory = j1.getJSONArray("tbl_subcategory");
-                    for (int i1 = 0; i1 < subcategory.length(); i1++) {
+                    for (int i1 = 0; i1 < subcategory.length(); i1++)
+                    {
                         JSONObject jo = subcategory.getJSONObject(i1);
 
                         String subcat_id = jo.getString("subcat_id");
