@@ -509,7 +509,7 @@ public class NewsDetailActivity extends AppCompatActivity {
                 sliderAd.setVisibility(View.VISIBLE);
                 for(int i=0;i<joImgArray.length();i++)
                 {
-                    HashMap<String,String > con = new HashMap<>();
+                    final HashMap<String,String > con = new HashMap<>();
                     try {
                         JSONObject jo = joImgArray.getJSONObject(i);
                         String news_img = jo.getString("news_img");
@@ -524,6 +524,7 @@ public class NewsDetailActivity extends AppCompatActivity {
                         for (String name : con.keySet()) {
                             DefaultSliderView textSliderView = new DefaultSliderView(NewsDetailActivity.this);
                             // initialize a SliderLayout
+
                             final int finalI = i1;
                             textSliderView
                                     .image(con.get(String.valueOf(i1)))
@@ -531,7 +532,10 @@ public class NewsDetailActivity extends AppCompatActivity {
                                     .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
                                         @Override
                                         public void onSliderClick(BaseSliderView slider) {
-                                            Toast.makeText(getApplicationContext(),"click = "+ finalI,Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(getApplicationContext(),"click = "+ con.get(String.valueOf(finalI)),Toast.LENGTH_SHORT).show();
+                                            Intent i = new Intent(getApplicationContext(),ZoomAdImgActivity.class);
+                                            i.putExtra("Img",con.get(String.valueOf(finalI)));
+                                            startActivity(i);
                                         }
                                     });
 

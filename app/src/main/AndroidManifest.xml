@@ -21,34 +21,31 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".HomeActivity"/>
-        <activity
-            android:name=".FirstActivity" />
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".FirstActivity" />
         <activity
             android:name=".VideoActivity"
             android:label="@string/title_activity_video"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".VideoViewActivity" />
+        <activity android:name=".VideoViewActivity" />
         <activity
             android:name=".AdvertiseActivity"
             android:label="@string/title_activity_advertise"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ZoomAdvertiseActivity" />
+        <activity android:name=".ZoomAdvertiseActivity" />
         <activity
             android:name=".NewsActivity"
-            android:label="@string/title_activity_news"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_news"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".NewsDetailActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"/>
+            android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
             android:name=".ContactUsActivity"
             android:label="@string/title_activity_contact_us"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ZoomAdImgActivity"></activity>
     </application>
 
 </manifest>
