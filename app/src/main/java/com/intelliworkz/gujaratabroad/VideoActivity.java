@@ -172,7 +172,7 @@ public class VideoActivity extends AppCompatActivity
         protected void onPreExecute() {
             super.onPreExecute();
             dialog=new ProgressDialog(VideoActivity.this);
-            dialog.setTitle("Loading....");
+            dialog.setMessage("Loading....");
             dialog.setCancelable(true);
             dialog.show();
         }
@@ -400,6 +400,7 @@ public class VideoActivity extends AppCompatActivity
             });
         }
     }
+
     private class GetAdBottomRightBanner extends AsyncTask<String,Void,String>{
         String addImg,addLink;
         ImageLoader imageLoader;
