@@ -172,7 +172,7 @@ public class VideoActivity extends AppCompatActivity
         protected void onPreExecute() {
             super.onPreExecute();
             dialog=new ProgressDialog(VideoActivity.this);
-            dialog.setTitle("Loading....");
+            dialog.setMessage("Loading....");
             dialog.setCancelable(true);
             dialog.show();
         }
@@ -415,17 +415,17 @@ public class VideoActivity extends AppCompatActivity
                 JSONObject j=new JSONObject(adPd);
                 status=j.getString("status");
                 if(status.equals("1"))
-                {
-                    Log.d("Like","Successfully");
-                    message = j.getString("message");
-                    JSONArray adJsArry=j.getJSONArray("data");
+                        {
+                            Log.d("Like","Successfully");
+                            message = j.getString("message");
+                            JSONArray adJsArry=j.getJSONArray("data");
 
-                    for (int i=0;i<adJsArry.length();i++)
-                    {
-                        JSONObject jo=adJsArry.getJSONObject(0);
+                            for (int i=0;i<adJsArry.length();i++)
+                            {
+                                JSONObject jo=adJsArry.getJSONObject(0);
 
-                        addImg=jo.getString("add_banner");
-                        addLink=jo.getString("add_link");
+                                addImg=jo.getString("add_banner");
+                                addLink=jo.getString("add_link");
 
                         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                                 .cacheOnDisc(true).cacheInMemory(true)

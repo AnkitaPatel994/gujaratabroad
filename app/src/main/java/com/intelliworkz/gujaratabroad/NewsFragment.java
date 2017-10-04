@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +61,8 @@ public class NewsFragment extends Fragment{
     ArrayList<String> tabTitlesSubCat = new ArrayList<>();
     String arrPosition="0";
 
+    LinearLayout rlBottom;
+
     // newInstance constructor for creating fragment with arguments
     public static NewsFragment newInstance(int page, String title) {
         NewsFragment fragmentFirst = new NewsFragment();
@@ -88,6 +92,8 @@ public class NewsFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_news, container, false);
+
+        rlBottom=(LinearLayout)view.findViewById(R.id.rlBottom);
 
         SubCatpager = (ViewPager) view.findViewById(R.id.SubCatpager_hod);
         subCattabLayout = (TabLayout) view.findViewById(R.id.subCattabLayout);
@@ -136,7 +142,35 @@ public class NewsFragment extends Fragment{
         GetAdBottomRightNews adBottomRightNews=new GetAdBottomRightNews();
         adBottomRightNews.execute();
 
+        updateLayout(getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE);
+
         return view;
+    }
+
+    private void updateLayout(boolean isLandscape) {
+        if(isLandscape)
+        {
+            rlBottom.setVisibility(View.GONE);
+        }
+        else
+        {
+            rlBottom.setVisibility(View.VISIBLE);
+        }
+    }
+
+    //Screen Orientation Mode Code
+    @Override
+    public void onConfigurationChanged(Configuration newConfig)
+    {
+        if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE)
+        {
+            rlBottom.setVisibility(View.GONE);
+        }
+        else
+        {
+            rlBottom.setVisibility(View.VISIBLE);
+        }
+        super.onConfigurationChanged(newConfig);
     }
 
     private class GetNewsList extends AsyncTask<String,Void,String>{
@@ -145,7 +179,7 @@ public class NewsFragment extends Fragment{
         protected void onPreExecute() {
             super.onPreExecute();
             dialog=new ProgressDialog(getActivity());
-            dialog.setTitle("Loading....");
+            dialog.setMessage("Loading....");
             dialog.setCancelable(true);
             dialog.show();
         }

@@ -3,6 +3,7 @@ package com.intelliworkz.gujaratabroad;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -13,6 +14,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +41,7 @@ public class NewsDetailActivity extends AppCompatActivity {
 
     ImageView img_adTopNews,img_adBottomLeftfullNews,img_adBottomRightfullNews,imgZoom,imgClose;
     TextView txtNDate,txtNTitle,txtNDesc;
+    RelativeLayout rlBottom;
     ArrayList<NewsModel> newsArrayList=new ArrayList<>();
     String message,status,NewsTitle,mainCatName,NewsDate,NewsDesc,newsId;
     String url=HomeActivity.SERVICE_URL;
@@ -47,6 +51,13 @@ public class NewsDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail);
+
+        if(getSupportActionBar()!= null)
+        {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
         txtNDesc=(TextView)findViewById(R.id.txtNDesc);
         txtNDate=(TextView)findViewById(R.id.txtNDate);
         txtNTitle=(TextView)findViewById(R.id.txtNTitle);
@@ -54,6 +65,7 @@ public class NewsDetailActivity extends AppCompatActivity {
         img_adTopNews=(ImageView)findViewById(R.id.img_adTopNews);
         img_adBottomLeftfullNews=(ImageView)findViewById(R.id.img_adBottomLeftfullNews);
         img_adBottomRightfullNews=(ImageView)findViewById(R.id.img_adBottomRightfullNews);
+        rlBottom=(RelativeLayout)findViewById(R.id.rlBottom);
 
         final Dialog dialog = new Dialog(NewsDetailActivity.this,android.R.style.Theme_Light_NoTitleBar);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -98,14 +110,35 @@ public class NewsDetailActivity extends AppCompatActivity {
         GetBottomRightBanner getBottomRightBanner=new GetBottomRightBanner();
         getBottomRightBanner.execute();
 
+        updateLayout(getResources().getConfiguration().orientation==Configuration.ORIENTATION_LANDSCAPE);
+ }
 
-        if(getSupportActionBar()!= null)
+    private void updateLayout(boolean isLandscape) {
+        if(isLandscape)
         {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            rlBottom.setVisibility(View.GONE);
         }
-
+        else
+        {
+            rlBottom.setVisibility(View.VISIBLE);
+        }
     }
+
+   //Screen Orientation Mode Code
+       @Override
+       public void onConfigurationChanged(Configuration newConfig)
+       {
+           if(newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE)
+           {
+               rlBottom.setVisibility(View.GONE);
+           }
+           else
+           {
+               rlBottom.setVisibility(View.VISIBLE);
+           }
+           super.onConfigurationChanged(newConfig);
+       }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==android.R.id.home)

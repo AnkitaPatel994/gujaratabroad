@@ -3,6 +3,7 @@ package com.intelliworkz.gujaratabroad;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -27,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NewsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -67,13 +70,15 @@ public class NewsActivity extends AppCompatActivity
 
         pager = (ViewPager) findViewById(R.id.pager_hod);
 
+
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(pager);
 
         GetTabCategrory tabCat=new GetTabCategrory();
         tabCat.execute();
-
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -173,7 +178,7 @@ public class NewsActivity extends AppCompatActivity
         protected void onPreExecute() {
             super.onPreExecute();
             dialog=new ProgressDialog(NewsActivity.this);
-            dialog.setTitle("Loading....");
+            dialog.setMessage("Loading....");
             dialog.show();
         }
 
