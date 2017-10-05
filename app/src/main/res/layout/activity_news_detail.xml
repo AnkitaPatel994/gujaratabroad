@@ -26,7 +26,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/top"
         android:orientation="vertical"
-        android:layout_above="@+id/relativeLayout">
+        android:layout_above="@+id/rlBottom">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -34,7 +34,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/top"
                 android:orientation="vertical">
 
                 <com.daimajia.slider.library.SliderLayout
