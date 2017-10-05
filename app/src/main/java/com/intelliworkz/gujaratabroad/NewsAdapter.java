@@ -61,6 +61,7 @@ class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         String Img = newsArrayList.get(position).getNewsImg();
 
         final String urlImg = url+"news_img/"+Img;
+
         holder.layAd.setVisibility(View.GONE);
 
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
@@ -113,7 +114,15 @@ class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
             }
 
         holder.txtNewsTitle.setText(Html.fromHtml(newsTitle));
-        imageLoader.displayImage(urlImg,holder.imgNews, options);
+        if(Img.equals("null"))
+        {
+            holder.imgNews.setImageResource(R.drawable.background_news);
+        }
+        else
+        {
+            imageLoader.displayImage(urlImg,holder.imgNews, options);
+        }
+
 
         holder.layNewsList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,7 +135,6 @@ class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 i.putExtra("newsDesc",newsDesc);
                 i.putExtra("urlImg",urlImg);
                 context.startActivity(i);
-                //Toast.makeText(context,"Img",Toast.LENGTH_SHORT).show();
             }
         });
     }
