@@ -22,6 +22,7 @@
             android:textSize="40dp" />
     </RelativeLayout>
     <LinearLayout
+        android:id="@+id/llCen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/top"
@@ -75,10 +76,27 @@
                     android:textColor="#181819"
                     android:text="TextView"/>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="20dp"
+                    android:text="Related News"
+                    android:layout_marginTop="30dp"
+                    android:textStyle="bold"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvReletedNews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"/>
+
             </LinearLayout>
         </ScrollView>
 
     </LinearLayout>
+
+
     <RelativeLayout
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"

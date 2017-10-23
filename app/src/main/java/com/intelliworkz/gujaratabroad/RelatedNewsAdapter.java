@@ -1,5 +1,6 @@
 package com.intelliworkz.gujaratabroad;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -28,23 +29,19 @@ import java.util.HashMap;
  * Created by pc-6 on 6/28/2017.
  */
 
-class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
+class RelatedNewsAdapter extends RecyclerView.Adapter<RelatedNewsAdapter.ViewHolder> {
     Context context;
-    ArrayList<NewsModel> newsArrayList;
-    ArrayList<HashMap<String, String>> adcenterList;
-    String url=HomeActivity.SERVICE_URL;
+    ArrayList<NewsModel> newsRelatedArrayList;
     View v;
-    int count=0;
 
-    public NewsAdapter(Context context, ArrayList<NewsModel> newsArrayList, ArrayList<HashMap<String, String>> adcenterList) {
+    public RelatedNewsAdapter(Context context, ArrayList<NewsModel> newsRelatedArrayList) {
         this.context=context;
-        this.newsArrayList=newsArrayList;
-        this.adcenterList=adcenterList;
+        this.newsRelatedArrayList=newsRelatedArrayList;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        v= LayoutInflater.from(parent.getContext()).inflate(R.layout.newslist,parent,false);
+        v= LayoutInflater.from(parent.getContext()).inflate(R.layout.relatednewslist,parent,false);
         ViewHolder viewHolder=new ViewHolder(v);
         return viewHolder;
     }
@@ -52,18 +49,16 @@ class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        final String newsId=newsArrayList.get(position).getNewsId();
-        final String mainCatId=newsArrayList.get(position).getMainCatId();
-        final String mainCatName=newsArrayList.get(position).getMainCatName();
-        final String newsDate=newsArrayList.get(position).getNewsDate();
-        final String newsDesc=newsArrayList.get(position).getNewsDetails();
-        final String newsTitle=newsArrayList.get(position).getNewsTitle();
+        final String newsId=newsRelatedArrayList.get(position).getNewsId();
+        final String mainCatId=newsRelatedArrayList.get(position).getMainCatId();
+        final String mainCatName=newsRelatedArrayList.get(position).getMainCatName();
+        final String newsDate=newsRelatedArrayList.get(position).getNewsDate();
+        final String newsDesc=newsRelatedArrayList.get(position).getNewsDetails();
+        final String newsTitle=newsRelatedArrayList.get(position).getNewsTitle();
 
-        String Img = newsArrayList.get(position).getNewsImg();
+        String Img = newsRelatedArrayList.get(position).getNewsImg();
 
-        final String urlImg = url+"news_img/"+Img;
-
-        holder.layAd.setVisibility(View.GONE);
+        final String urlImg = HomeActivity.SERVICE_URL+"news_img/"+Img;
 
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                 .cacheOnDisc(true).cacheInMemory(true)
@@ -84,49 +79,19 @@ class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 .showImageOnFail(fallback)
                 .showImageOnLoading(fallback).build();
 
-            int pos = position+1;
-            if(pos%4==0)
-            {
-                holder.layAd.setVisibility(View.VISIBLE);
-                if(count < adcenterList.size())
-                {
-                    String adCenterImg = adcenterList.get(count).get("addImg");
-                    final String adCenterLink = adcenterList.get(count).get("addLink");
-                    imageLoader.displayImage(adCenterImg,holder.imgCenterAd, options);
-
-                    holder.layAd.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent i=new Intent(Intent.ACTION_VIEW);
-                            i.setData(Uri.parse(adCenterLink));
-                            if(!MyStartActivity(i))
-                            {
-                                i.setData(Uri.parse(adCenterLink));
-                                if(!MyStartActivity(i))
-                                {
-                                    Toast.makeText(context,"Could not open browser",Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                            //Toast.makeText(context,"Hi",Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-                count++;
-            }
-
-        holder.txtNewsTitle.setText(Html.fromHtml(newsTitle));
+        holder.txtReNewsTitle.setText(Html.fromHtml(newsTitle));
 
         if(Img.equals("null"))
         {
-            holder.imgNews.setImageResource(R.drawable.background_news);
+            holder.imgReNews.setImageResource(R.drawable.background_news);
         }
         else
         {
-            imageLoader.displayImage(urlImg,holder.imgNews, options);
+            imageLoader.displayImage(urlImg,holder.imgReNews, options);
         }
 
 
-        holder.layNewsList.setOnClickListener(new View.OnClickListener() {
+        holder.layReNewsList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i=new Intent(context,NewsDetailActivity.class);
@@ -138,6 +103,7 @@ class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
                 i.putExtra("newsDesc",newsDesc);
                 i.putExtra("urlImg",urlImg);
                 context.startActivity(i);
+                ((Activity)context).finish();
             }
         });
     }
@@ -157,22 +123,22 @@ class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return newsArrayList.size();
+        return newsRelatedArrayList.size();
 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtNewsTitle;
-        ImageView imgNews,imgCenterAd;
-        LinearLayout layNewsList,layAd;
+        TextView txtReNewsTitle;
+        ImageView imgReNews;
+        LinearLayout layReNewsList;
         public ViewHolder(View v) {
             super(v);
-            txtNewsTitle=(TextView)v.findViewById(R.id.txtNewsTitle);
-            imgNews=(ImageView)v.findViewById(R.id.imgNews);
-            imgCenterAd=(ImageView)v.findViewById(R.id.imgCenterAd);
 
-            layNewsList=(LinearLayout)v.findViewById(R.id.layNewsList);
-            layAd=(LinearLayout)v.findViewById(R.id.layAd);
+            txtReNewsTitle=(TextView)v.findViewById(R.id.txtReNewsTitle);
+            imgReNews=(ImageView)v.findViewById(R.id.imgReNews);
+            layReNewsList=(LinearLayout)v.findViewById(R.id.layReNewsList);
+
         }
     }
 }
+

@@ -8,11 +8,12 @@ import org.json.JSONObject;
 
 public class NewsModel {
 
-    String news_id,mainCatName,newsTitle,newsDetails,newsImg,newsDate;
+    String news_id,mainCatId,mainCatName,newsTitle,newsDetails,newsImg,newsDate;
 
-    public NewsModel(String news_id, String mainCatName, String newsTitle, String newsDetails, String newsImg, String newsDate) {
+    public NewsModel(String news_id, String mainCatId, String mainCatName, String newsTitle, String newsDetails, String newsImg, String newsDate) {
 
         this.news_id=news_id;
+        this.mainCatId = mainCatId;
         this.mainCatName=mainCatName;
         this.newsTitle=newsTitle;
         this.newsDetails=newsDetails;
@@ -27,6 +28,14 @@ public class NewsModel {
 
     public void setMainCatName(String mainCatName) {
         this.mainCatName = mainCatName;
+    }
+
+    public String getMainCatId() {
+        return mainCatId;
+    }
+
+    public void setMainCatId(String mainCatId) {
+        this.mainCatId = mainCatId;
     }
 
     public String getNewsId() {

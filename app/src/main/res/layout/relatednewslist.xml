@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:id="@+id/layReNewsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/imgReNews"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="10dp" />
+
+        <TextView
+            android:id="@+id/txtReNewsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textSize="20dp"
+            android:text="News"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/imgNews"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_below="@+id/layNewsList"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        style="@style/Divider"/>
+
+</RelativeLayout>

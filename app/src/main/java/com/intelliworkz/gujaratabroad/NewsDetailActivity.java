@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
 import android.view.MenuItem;
@@ -42,11 +44,13 @@ public class NewsDetailActivity extends AppCompatActivity {
     ImageView img_adTopNews,img_adBottomLeftfullNews,img_adBottomRightfullNews,imgZoom,imgClose;
     TextView txtNDate,txtNTitle,txtNDesc;
     RelativeLayout rlBottom;
-    ArrayList<NewsModel> newsArrayList=new ArrayList<>();
-    String message,status,NewsTitle,mainCatName,NewsDate,NewsDesc,newsId;
+    ArrayList<NewsModel> newsRelatedArrayList=new ArrayList<>();
+    String message,status,NewsTitle,mainCatId,mainCatName,NewsDate,NewsDesc,newsId;
     String url=HomeActivity.SERVICE_URL;
     SliderLayout sliderAd;
     ArrayList<HashMap<String, String>> ImgArrayList = new ArrayList<>();
+    RecyclerView rvReletedNews;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +94,7 @@ public class NewsDetailActivity extends AppCompatActivity {
         NewsTitle=getIntent().getExtras().getString("newsTitle");
         txtNTitle.setText(Html.fromHtml(NewsTitle));
 
+        mainCatId=getIntent().getExtras().getString("mainCatId");
         mainCatName=getIntent().getExtras().getString("mainCatName");
 
         NewsDate=getIntent().getExtras().getString("newsDate");
@@ -97,6 +102,15 @@ public class NewsDetailActivity extends AppCompatActivity {
 
         NewsDesc=getIntent().getExtras().getString("newsDesc");
         txtNDesc.setText(Html.fromHtml(NewsDesc));
+
+        rvReletedNews=(RecyclerView)findViewById(R.id.rvReletedNews);
+        rvReletedNews.setHasFixedSize(true);
+
+        RecyclerView.LayoutManager rvLayoutManager=new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL,false);
+        rvReletedNews.setLayoutManager(rvLayoutManager);
+
+        GetReletedNews reletedNews = new GetReletedNews(newsId,mainCatId);
+        reletedNews.execute();
 
         GetNewsImg newsImg = new GetNewsImg(newsId);
         newsImg.execute();
@@ -110,10 +124,10 @@ public class NewsDetailActivity extends AppCompatActivity {
         GetBottomRightBanner getBottomRightBanner=new GetBottomRightBanner();
         getBottomRightBanner.execute();
 
-        updateLayout(getResources().getConfiguration().orientation==Configuration.ORIENTATION_LANDSCAPE);
+        /*updateLayout(getResources().getConfiguration().orientation==Configuration.ORIENTATION_LANDSCAPE);*/
  }
 
-    private void updateLayout(boolean isLandscape) {
+    /*private void updateLayout(boolean isLandscape) {
         if(isLandscape)
         {
             rlBottom.setVisibility(View.GONE);
@@ -137,7 +151,7 @@ public class NewsDetailActivity extends AppCompatActivity {
                rlBottom.setVisibility(View.VISIBLE);
            }
            super.onConfigurationChanged(newConfig);
-       }
+       }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -554,5 +568,77 @@ public class NewsDetailActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    private class GetReletedNews extends AsyncTask<String,Void,String> {
+
+        String newsId,mainCatId;
+
+        public GetReletedNews(String newsId, String mainCatId) {
+
+            this.newsId = newsId;
+            this.mainCatId = mainCatId;
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            newsRelatedArrayList.clear();
+
+            JSONObject newsList=new JSONObject();
+            try {
+                newsList.put("news_id",newsId);
+                newsList.put("news_cat",mainCatId);
+                Postdata postdata=new Postdata();
+                String news=postdata.post(url+"related_news.php",newsList.toString());
+                JSONObject j=new JSONObject(news);
+                status=j.getString("status");
+                if(status.equals("1"))
+                {
+                    Log.d("Like","Successfully");
+                    message = j.getString("message");
+                    JSONArray newsarr=j.getJSONArray("tbl_news");
+                    for(int i=0;i<newsarr.length();i++)
+                    {
+                        JSONObject newsJson=newsarr.getJSONObject(i);
+
+                        String news_id=newsJson.getString("news_id");
+                        String mainCatId = newsJson.getString("news_cat");
+                        String mainCatName = newsJson.getString("category_name");
+                        String newsTitle=newsJson.getString("news_title");
+                        String newsDetails=newsJson.getString("news_desc");
+                        String newsDate=newsJson.getString("date");
+                        String newsImg=newsJson.getString("news_img");
+
+                        NewsModel n=new NewsModel(news_id,mainCatId,mainCatName,newsTitle,newsDetails,newsImg,newsDate);
+                        newsRelatedArrayList.add(n);
+                    }
+                }
+                else
+                {
+                    message = j.getString("message");
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if(status.equals("1"))
+            {
+                RecyclerView.Adapter rvNewsAdapter=new RelatedNewsAdapter(NewsDetailActivity.this,newsRelatedArrayList);
+                rvReletedNews.setAdapter(rvNewsAdapter);
+            }
+            else
+            {
+                /*rvReletedNews.setAdapter(null);*/
+                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 }

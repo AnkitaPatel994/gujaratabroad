@@ -142,12 +142,12 @@ public class NewsFragment extends Fragment{
         GetAdBottomRightNews adBottomRightNews=new GetAdBottomRightNews();
         adBottomRightNews.execute();
 
-        updateLayout(getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE);
+        /*updateLayout(getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE);*/
 
         return view;
     }
 
-    private void updateLayout(boolean isLandscape) {
+    /*private void updateLayout(boolean isLandscape) {
         if(isLandscape)
         {
             rlBottom.setVisibility(View.GONE);
@@ -171,7 +171,7 @@ public class NewsFragment extends Fragment{
             rlBottom.setVisibility(View.VISIBLE);
         }
         super.onConfigurationChanged(newConfig);
-    }
+    }*/
 
     private class GetNewsList extends AsyncTask<String,Void,String>{
         ProgressDialog dialog;
@@ -208,13 +208,14 @@ public class NewsFragment extends Fragment{
                         JSONObject newsJson=newsarr.getJSONObject(i);
 
                         String news_id=newsJson.getString("news_id");
+                        String mainCatId = newsJson.getString("news_cat");
                         String mainCatName = newsJson.getString("category_name");
                         String newsTitle=newsJson.getString("news_title");
                         String newsDetails=newsJson.getString("news_desc");
                         String newsDate=newsJson.getString("date");
                         String newsImg=newsJson.getString("news_img");
 
-                        NewsModel n=new NewsModel(news_id,mainCatName,newsTitle,newsDetails,newsImg,newsDate);
+                        NewsModel n=new NewsModel(news_id,mainCatId,mainCatName,newsTitle,newsDetails,newsImg,newsDate);
                         newsArrayList.add(n);
                     }
                 }
