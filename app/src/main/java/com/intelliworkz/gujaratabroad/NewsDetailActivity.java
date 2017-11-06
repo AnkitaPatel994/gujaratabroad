@@ -124,6 +124,76 @@ public class NewsDetailActivity extends AppCompatActivity {
         GetBottomRightBanner getBottomRightBanner=new GetBottomRightBanner();
         getBottomRightBanner.execute();
 
+        final String urlNewsLink = "gujaratabroad.online/public-news.php?id="+newsId;
+
+        ImageView ivFacebook =(ImageView)findViewById(R.id.ivFacebook);
+        ivFacebook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                try {
+                    Intent mIntentFacebook = new Intent();
+                    mIntentFacebook.setClassName("com.facebook.katana", "com.facebook.composer.shareintent.ImplicitShareIntentHandlerDefaultAlias");
+                    mIntentFacebook.setAction("android.intent.action.SEND");
+                    mIntentFacebook.setType("text/plain");
+                    mIntentFacebook.putExtra("android.intent.extra.TEXT", urlNewsLink);
+                    startActivity(mIntentFacebook);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Intent mIntentFacebookBrowser = new Intent(Intent.ACTION_SEND);
+                    String mStringURL = "https://www.facebook.com/sharer/sharer.php?u=" + urlNewsLink;
+                    mIntentFacebookBrowser = new Intent(Intent.ACTION_VIEW, Uri.parse(mStringURL));
+                    startActivity(mIntentFacebookBrowser);
+                }
+
+            }
+        });
+
+        ImageView ivTwitter =(ImageView)findViewById(R.id.ivTwitter);
+        ivTwitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent();
+                i.putExtra(Intent.EXTRA_TEXT, "");
+                i.setAction(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("https://twitter.com/intent/tweet?text=" + urlNewsLink));
+                startActivity(i);
+
+            }
+        });
+
+        ImageView ivLinkedin =(ImageView)findViewById(R.id.ivLinkedin);
+        ivLinkedin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),urlNewsLink,Toast.LENGTH_SHORT).show();
+
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setClassName("com.linkedin.android",
+                        "com.linkedin.android.home.UpdateStatusActivity");
+                shareIntent.setType("text");
+                shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, urlNewsLink);
+                startActivity(shareIntent);
+
+            }
+        });
+
+        ImageView ivGmail =(ImageView)findViewById(R.id.ivGmail);
+        ivGmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("plain/text");
+                intent.putExtra(Intent.EXTRA_EMAIL, new String[] {  });
+                intent.putExtra(Intent.EXTRA_SUBJECT, "");
+                intent.putExtra(Intent.EXTRA_TEXT, urlNewsLink);
+                startActivity(Intent.createChooser(intent, ""));
+
+            }
+        });
+
         /*updateLayout(getResources().getConfiguration().orientation==Configuration.ORIENTATION_LANDSCAPE);*/
  }
 

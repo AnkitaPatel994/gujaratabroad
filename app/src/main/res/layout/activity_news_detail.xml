@@ -76,6 +76,50 @@
                     android:textColor="#181819"
                     android:text="TextView"/>
 
+                <View
+                    android:layout_below="@+id/layNewsList"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="5dp"
+                    style="@style/Divider"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/ivFacebook"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/facebook"/>
+
+                    <ImageView
+                        android:id="@+id/ivTwitter"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/twitter"/>
+
+                    <ImageView
+                        android:id="@+id/ivLinkedin"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="30dp"
+                        android:background="@drawable/linkedin"/>
+
+                    <ImageView
+                        android:id="@+id/ivGmail"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/gmail"/>
+
+                </LinearLayout>
+                <View
+                    android:layout_below="@+id/layNewsList"
+                    android:layout_marginTop="5dp"
+                    style="@style/Divider"/>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

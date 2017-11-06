@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.intelliworkz.gujaratabroad"
         minSdkVersion 15
-        targetSdkVersion 25
-        versionCode 6
-        versionName "1.0.6"
+        targetSdkVersion 26
+        versionCode 8
+        versionName "1.0.8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -28,11 +28,11 @@ dependencies {
     compile files('libs/okio-1.6.0.jar')
     compile project(':universalvideoview')
 
-    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:design:26.+'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:support-v4:26.+'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.daimajia.slider:library:1.1.5@aar'
