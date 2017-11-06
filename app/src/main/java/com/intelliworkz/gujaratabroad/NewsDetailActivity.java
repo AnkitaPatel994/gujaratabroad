@@ -3,6 +3,7 @@ package com.intelliworkz.gujaratabroad;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +33,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.squareup.okhttp.internal.Util;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,6 +41,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class NewsDetailActivity extends AppCompatActivity {
 
@@ -169,13 +173,11 @@ public class NewsDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(),urlNewsLink,Toast.LENGTH_SHORT).show();
 
-                Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                shareIntent.setClassName("com.linkedin.android",
-                        "com.linkedin.android.home.UpdateStatusActivity");
-                shareIntent.setType("text");
-                shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, urlNewsLink);
-                startActivity(shareIntent);
-
+                Intent i = new Intent();
+                i.putExtra(Intent.EXTRA_TEXT, "");
+                i.setAction(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("http://www.linkedin.com/cws/share?url=" + urlNewsLink));
+                startActivity(i);
             }
         });
 

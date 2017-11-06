@@ -56,7 +56,7 @@
         <activity
             android:name=".NewsDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ContactUsActivity"
