@@ -175,7 +175,6 @@ class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
         @Override
         protected String doInBackground(String... params) {
 
-
             MediaMetadataRetriever mediaMetadataRetriever = null;
             try {
                 mediaMetadataRetriever = new MediaMetadataRetriever();

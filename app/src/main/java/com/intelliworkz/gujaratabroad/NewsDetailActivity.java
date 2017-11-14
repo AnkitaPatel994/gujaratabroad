@@ -171,7 +171,6 @@ public class NewsDetailActivity extends AppCompatActivity {
         ivLinkedin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),urlNewsLink,Toast.LENGTH_SHORT).show();
 
                 Intent i = new Intent();
                 i.putExtra(Intent.EXTRA_TEXT, "");
